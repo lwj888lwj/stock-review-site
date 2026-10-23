@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="个股收盘复盘与次日开盘情景分析。内置西部矿业、中国西电，可扩展更多股票。">
+  <title>地平线 · 个股收盘复盘</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="返回顶部">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" role="img">
+          <path d="M8 27 16 16l7 8 9-12" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      <span>
+        <strong>地平线</strong>
+        <small>STOCK INSIGHT</small>
+      </span>
+    </a>
+
+    <nav class="top-nav" aria-label="主导航">
+      <a class="active" href="#daily">全球日报</a>
+      <a href="#review">个股复盘</a>
+      <a href="#outlook">明日开盘</a>
+      <a href="#fundamentals">基本面</a>
+      <a href="#glossary">术语解释</a>
+    </nav>
+
+    <div class="header-status">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span>10月23日收盘数据</span>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="workspace-head">
+      <div>
+        <p class="eyebrow">DAILY CLOSE INTELLIGENCE</p>
+        <h1>把收盘数据，翻译成明天的观察线索</h1>
+        <p class="workspace-subtitle">收盘复盘、开盘情景与波动等级集中呈现。概率来自规则模型，不构成确定性预测。</p>
+      </div>
+      <div class="workspace-meta">
+        <span>2026.10.23</span>
+        <strong>星期五</strong>
+      </div>
+    </section>
+
+    <section class="stock-switcher" aria-label="股票池">
+      <div class="pool-title">
+        <span>股票池</span>
+        <small id="stockCount">3 只 · 可继续扩充</small>
+      </div>
+      <div id="stockTabs" class="stock-tabs" role="tablist"></div>
+      <button class="add-stock" type="button" id="openExtendModal" aria-haspopup="dialog">
+        <span aria-hidden="true">＋</span>
+        添加股票
+      </button>
+    </section>
+
+    <section class="global-report card" id="daily">
+      <div class="global-report-head">
+        <div>
+          <p class="eyebrow">GLOBAL MARKET BRIEF</p>
+          <h2>今日全球股市日报</h2>
+          <p>覆盖A股收盘、港股收盘、美股当前交易时段及主要宏观资产。</p>
+        </div>
+        <div class="live-status">
+          <i aria-hidden="true"></i>
+          <span id="liveUpdateTime">正在同步最新行情</span>
+        </div>
+      </div>
+
+      <div class="market-groups" id="marketGroups"></div>
+
+      <div class="daily-grid">
+        <div class="macro-panel">
+          <div class="panel-heading compact-heading">
+            <div><p class="label">宏观与大宗</p><h3>跨市场温度计</h3></div>
+            <span class="pill">自动刷新</span>
+          </div>
+          <div id="macroGrid" class="macro-grid"></div>
+          <p class="data-note">汇率、A50、原油、黄金、铜会在页面打开时更新，交易时段每60秒尝试刷新。美债收益率为最近可得数据。</p>
+        </div>
+
+        <div class="news-panel">
+          <div class="panel-heading compact-heading">
+            <div><p class="label">财经资讯</p><h3>今日重要线索</h3></div>
+            <span class="pill source-pill">信息整理</span>
+          </div>
+          <ul class="news-list" id="marketNews"></ul>
+        </div>
+      </div>
+
+      <div class="daily-thesis">
+        <div>
+          <span class="daily-thesis-label">今日主线</span>
+          <strong>成长修复与能源风险并行</strong>
+        </div>
+        <p>A股与港股今日由成长方向主导反弹，美股盘中呈指数分化；原油受地缘风险推动大涨，黄金回落，说明资金并非单纯避险，而是在宏观与产业逻辑之间快速切换。</p>
+      </div>
+
+      <div class="macro-release">
+        <span>今日宏观数据</span>
+        <p>美国10月标普全球制造业PMI初值56.0，高于预期；服务业57.9，综合57.6。密歇根大学消费者信心终值48.0，高于预期但略低于前值；5年通胀预期终值3.5%。</p>
+      </div>
+    </section>
+
+    <section class="dashboard" id="review" aria-live="polite">
+      <article class="quote-panel card">
+        <div class="card-heading">
+          <div>
+            <p class="label">今日收盘</p>
+            <div class="security-title">
+              <h2 id="stockName">西部矿业</h2>
+              <span id="stockCode">601168.SH</span>
+              <span id="stockSector" class="tag">工业金属</span>
+            </div>
+          </div>
+          <div class="quote-badge" id="sessionBadge">15:00 已收盘</div>
+        </div>
+
+        <div class="quote-overview">
+          <div>
+            <div class="price-line">
+              <strong id="lastPrice">31.28</strong>
+              <span id="priceChange" class="positive">+1.46%</span>
+            </div>
+            <p id="priceDetail" class="muted">上涨 0.45 元 · 成交 14.72 亿元</p>
+          </div>
+          <div class="ohlc-grid" aria-label="日内行情摘要">
+            <div><span>开盘</span><strong id="openPrice">29.81</strong></div>
+            <div><span>最高</span><strong id="highPrice">31.52</strong></div>
+            <div><span>最低</span><strong id="lowPrice">29.58</strong></div>
+            <div><span>换手</span><strong id="turnover">2.03%</strong></div>
+          </div>
+        </div>
+
+        <div class="chart-block">
+          <div class="chart-toolbar">
+            <div>
+              <h3>今日分时走势</h3>
+              <p>黄线为昨收参考，青色折线为真实分钟收盘序列</p>
+            </div>
+            <div class="legend"><span class="legend-line"></span> 价格</div>
+          </div>
+          <div id="intradayChart" class="intraday-chart"></div>
+          <div class="chart-axis"><span>09:30</span><span>11:30 / 13:00</span><span>15:00</span></div>
+        </div>
+
+        <div class="signal-strip" id="signalStrip"></div>
+      </article>
+
+      <aside class="forecast-panel card">
+        <div class="forecast-top">
+          <p class="label">明日开盘倾向</p>
+          <span class="model-chip">规则模型</span>
+        </div>
+        <h2 id="openBias">低开修复</h2>
+        <p id="openDescription" class="forecast-description"></p>
+
+        <div class="prob-row">
+          <div class="prob-ring" id="probRing">
+            <div><strong id="probValue">54%</strong><span>偏强概率</span></div>
+          </div>
+          <div class="prob-copy">
+            <span>明日关键区间</span>
+            <strong id="openRange">30.50—31.10</strong>
+            <small id="openTrigger">收复 30.83 是修复确认信号</small>
+          </div>
+        </div>
+
+        <div class="volatility-card">
+          <div class="volatility-head">
+            <span>价格波动等级</span>
+            <strong id="volatilityLevel">中高</strong>
+          </div>
+          <div class="volatility-track"><span id="volatilityBar"></span></div>
+          <div class="volatility-labels"><span>低</span><span>中</span><span>高</span></div>
+          <p id="volatilityText">预期日内振幅 3.2%—5.0%</p>
+        </div>
+
+        <div class="scenario-list" id="scenarioList"></div>
+
+        <p class="model-note">模型依据：收盘位置、日内修复、均线、RSI、MACD、量能及商品/板块环境。概率未经统计回测。</p>
+      </aside>
+    </section>
+
+    <section class="section-block" id="outlook">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">OPENING PLAYBOOK</p>
+          <h2>明日开盘情景图</h2>
+        </div>
+        <span id="scenarioTimestamp">按 10/23 收盘数据推演</span>
+      </div>
+      <div class="scenario-grid" id="scenarioGrid"></div>
+    </section>
+
+    <section class="metrics-grid">
+      <article class="card metric-panel">
+        <div class="panel-heading">
+          <div><p class="label">技术面板</p><h2>趋势与关键位</h2></div>
+          <span class="pill" id="trendLabel">偏弱修复</span>
+        </div>
+        <div class="ma-list" id="maList"></div>
+        <div class="key-levels">
+          <div><span>第一支撑</span><strong id="support1">29.58</strong><small>今日低点</small></div>
+          <div><span>第一压力</span><strong id="resistance1">32.77</strong><small>10日均线</small></div>
+          <div><span>中期压力</span><strong id="resistance2">34.21</strong><small>20日均线</small></div>
+        </div>
+      </article>
+
+      <article class="card metric-panel" id="fundamentals">
+        <div class="panel-heading">
+          <div><p class="label">基本面快照</p><h2>盈利与估值</h2></div>
+          <span class="pill" id="fundamentalPill">利润提速</span>
+        </div>
+        <div class="fundamental-grid" id="fundamentalGrid"></div>
+        <p id="fundamentalNote" class="fundamental-note"></p>
+      </article>
+    </section>
+
+    <section class="insight-grid">
+      <article class="card thesis-card">
+        <div class="panel-heading">
+          <div><p class="label">核心判断</p><h2>今天发生了什么</h2></div>
+          <span class="ai-mark">AI 摘要</span>
+        </div>
+        <p class="thesis" id="thesis"></p>
+        <ul class="factor-list" id="positiveFactors"></ul>
+      </article>
+
+      <article class="card risk-card">
+        <div class="panel-heading">
+          <div><p class="label">风险雷达</p><h2>明天最该防什么</h2></div>
+          <span class="risk-mark">RISK</span>
+        </div>
+        <ul class="risk-list" id="riskFactors"></ul>
+      </article>
+    </section>
+
+    <section class="section-block history-block">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">FORECAST LOG</p>
+          <h2>预测记录</h2>
+        </div>
+        <span>次日开盘后自动进入待验证状态</span>
+      </div>
+      <div class="table-wrap card">
+        <table>
+          <thead>
+            <tr><th>复盘日期</th><th>标的</th><th>明日开盘判断</th><th>波动等级</th><th>关键触发</th><th>结果</th></tr>
+          </thead>
+          <tbody id="historyRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section-block glossary-section" id="glossary">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">PLAIN LANGUAGE</p>
+          <h2>术语白话解释</h2>
+        </div>
+        <button id="toggleGlossary" class="text-button" type="button">全部展开 ↓</button>
+      </div>
+      <div class="glossary-grid" id="glossaryGrid"></div>
+    </section>
+
+    <section class="disclosure">
+      <strong>重要说明</strong>
+      <p>本页面为行情复盘与情景分析工具。开盘概率、波动区间及支撑压力均为规则推演结果，不保证未来走势；所有数据以交易所及数据源最终披露为准。</p>
+    </section>
+  </main>
+
+  <footer>
+    <span>地平线 · Stock Insight</span>
+    <span>数据更新：2026-10-23 收盘</span>
+  </footer>
+
+  <dialog id="extendDialog">
+    <button class="dialog-close" id="closeExtendModal" aria-label="关闭">×</button>
+    <p class="eyebrow">SCALABLE WATCHLIST</p>
+    <h2>股票池已预留扩展位</h2>
+    <p>当前版本使用本地配置驱动。后续只需在 <code>app.js</code> 的 <code>stocks</code> 数据中加入新的股票对象，即可自动出现在股票池、复盘页和预测记录中。</p>
+    <div class="extension-points">
+      <span>行情快照</span><span>分时数据</span><span>技术指标</span><span>开盘情景</span>
+    </div>
+    <button class="primary-button" id="ackExtendModal" type="button">知道了</button>
+  </dialog>
+
+  <script src="./app.js"></script>
+</body>
+</html>
