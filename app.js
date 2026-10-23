@@ -498,6 +498,7 @@ function loadScript(url) {
     const script = document.createElement("script");
     script.src = url;
     script.charset = "gbk";
+    script.referrerPolicy = "no-referrer";
     script.async = true;
     const timeout = window.setTimeout(() => {
       script.remove();
