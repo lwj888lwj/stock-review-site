@@ -470,8 +470,7 @@ function updateLiveMarketRow(row) {
   element.classList.toggle("negative-live", row.pct < 0);
 }
 
-function parseTencentQuote(symbol) {
-  const variable = window[`v_${symbol}`];
+function parseTencentQuote(variable, symbol) {
   if (typeof variable !== "string") return null;
   const fields = variable.split("~");
   if (fields.length < 35) return null;
@@ -550,10 +549,19 @@ function updateMacroDefinition(definition, data) {
 
 async function refreshLiveData() {
   try {
-    await loadScript(`https://qt.gtimg.cn/q=${liveQuoteSymbols.join(",")}&_=${Date.now()}`);
+    const response = await fetch(`https://qt.gtimg.cn/q=${liveQuoteSymbols.join(",")}&_=${Date.now()}`, {
+      cache: "no-store",
+      referrerPolicy: "no-referrer"
+    });
+    if (!response.ok) throw new Error("行情请求失败");
+    const raw = new TextDecoder("gbk").decode(await response.arrayBuffer());
+    const quotePayloads = {};
+    for (const match of raw.matchAll(/v_([A-Za-z0-9_]+)="([^"]*)"/g)) {
+      quotePayloads[match[1]] = match[2];
+    }
     let latestTimestamp = "";
     liveQuoteSymbols.forEach((symbol) => {
-      const quote = parseTencentQuote(symbol);
+      const quote = parseTencentQuote(quotePayloads[symbol], symbol);
       if (!quote || !Number.isFinite(quote.price)) return;
       latestTimestamp = quote.timestamp || latestTimestamp;
       updateLiveMarketRow({ ...quote, time: `${quoteTimestamp(quote.timestamp)} 行情源` });
