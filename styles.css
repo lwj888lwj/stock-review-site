@@ -140,8 +140,17 @@ main { width: min(1420px, calc(100% - 40px)); margin: 0 auto; }
 .pool-title { padding: 0 10px 0 4px; }
 .pool-title span { display: block; font-size: 13px; font-weight: 700; }
 .pool-title small { color: var(--muted); font-size: 10px; }
-.stock-tabs { flex: 1; display: flex; gap: 8px; }
+.stock-tabs {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+}
 .stock-tab {
+  flex: 0 0 200px;
   min-width: 200px;
   padding: 12px 16px;
   border: 1px solid transparent;
