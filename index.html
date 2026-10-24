@@ -4,7 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="个股收盘复盘与次日开盘情景分析。内置西部矿业、中国西电，可扩展更多股票。">
+  <meta name="theme-color" content="#2f70e8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="地平线">
   <title>地平线 · 个股收盘复盘</title>
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="./icons/icon-180.png">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
@@ -32,9 +39,12 @@
       <a href="#glossary">术语解释</a>
     </nav>
 
-    <div class="header-status">
-      <span class="status-dot" aria-hidden="true"></span>
-      <span>10月23日收盘数据</span>
+    <div class="header-actions">
+      <div class="header-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>10月23日收盘数据</span>
+      </div>
+      <button class="install-app" id="installAppButton" type="button" hidden>安装 App</button>
     </div>
   </header>
 
@@ -294,6 +304,17 @@
       <span>行情快照</span><span>分时数据</span><span>技术指标</span><span>开盘情景</span>
     </div>
     <button class="primary-button" id="ackExtendModal" type="button">知道了</button>
+  </dialog>
+
+  <dialog id="installDialog">
+    <button class="dialog-close" id="closeInstallModal" aria-label="关闭">×</button>
+    <p class="eyebrow">INSTALL AS APP</p>
+    <h2>把地平线放到桌面</h2>
+    <p id="installInstructions">请使用浏览器菜单中的“安装应用”或“添加到主屏幕”。</p>
+    <div class="extension-points">
+      <span>独立图标</span><span>全屏启动</span><span>自动更新</span>
+    </div>
+    <button class="primary-button" id="ackInstallModal" type="button">知道了</button>
   </dialog>
 
   <script src="./app.js"></script>

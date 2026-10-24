@@ -765,6 +765,57 @@ function setupDialog() {
   });
 }
 
+function setupPwa() {
+  const installButton = $("installAppButton");
+  const installDialog = $("installDialog");
+  const standalone = window.matchMedia("(display-mode: standalone)").matches
+    || window.navigator.standalone === true;
+  let deferredPrompt = null;
+
+  if (!standalone) installButton.hidden = false;
+
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredPrompt = event;
+    installButton.hidden = false;
+  });
+
+  window.addEventListener("appinstalled", () => {
+    deferredPrompt = null;
+    installButton.hidden = true;
+  });
+
+  installButton.addEventListener("click", async () => {
+    if (!deferredPrompt) {
+      const isIos = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+      $("installInstructions").textContent = isIos
+        ? "点击 Safari 底部的分享按钮，再选择“添加到主屏幕”。"
+        : "请打开浏览器菜单，选择“安装应用”或“添加到主屏幕”。";
+      installDialog.showModal();
+      return;
+    }
+
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    installButton.hidden = true;
+  });
+
+  $("closeInstallModal").addEventListener("click", () => installDialog.close());
+  $("ackInstallModal").addEventListener("click", () => installDialog.close());
+  installDialog.addEventListener("click", (event) => {
+    if (event.target === installDialog) installDialog.close();
+  });
+
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./service-worker.js").catch(() => {
+        // The site remains usable when service workers are unavailable.
+      });
+    });
+  }
+}
+
 $("toggleGlossary").addEventListener("click", () => {
   glossaryExpanded = !glossaryExpanded;
   renderGlossary();
@@ -775,5 +826,6 @@ renderGlobalReport();
 render();
 renderGlossary();
 setupDialog();
+setupPwa();
 refreshLiveData();
 liveRefreshTimer = window.setInterval(refreshLiveData, 60000);
