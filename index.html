@@ -25,10 +25,10 @@
     </a>
 
     <nav class="top-nav" aria-label="主导航">
-      <a class="active" href="#daily">全球日报</a>
-      <a href="#review">个股复盘</a>
+      <a class="active" href="#review">个股复盘</a>
       <a href="#outlook">明日开盘</a>
       <a href="#fundamentals">基本面</a>
+      <a href="#daily">全球日报</a>
       <a href="#glossary">术语解释</a>
     </nav>
 
@@ -61,54 +61,6 @@
         <span aria-hidden="true">＋</span>
         添加股票
       </button>
-    </section>
-
-    <section class="global-report card" id="daily">
-      <div class="global-report-head">
-        <div>
-          <p class="eyebrow">GLOBAL MARKET BRIEF</p>
-          <h2>今日全球股市日报</h2>
-          <p>覆盖A股收盘、港股收盘、美股当前交易时段及主要宏观资产。</p>
-        </div>
-        <div class="live-status">
-          <i aria-hidden="true"></i>
-          <span id="liveUpdateTime">正在同步最新行情</span>
-        </div>
-      </div>
-
-      <div class="market-groups" id="marketGroups"></div>
-
-      <div class="daily-grid">
-        <div class="macro-panel">
-          <div class="panel-heading compact-heading">
-            <div><p class="label">宏观与大宗</p><h3>跨市场温度计</h3></div>
-            <span class="pill">自动刷新</span>
-          </div>
-          <div id="macroGrid" class="macro-grid"></div>
-          <p class="data-note">汇率、A50、原油、黄金、铜会在页面打开时更新，交易时段每60秒尝试刷新。美债收益率为最近可得数据。</p>
-        </div>
-
-        <div class="news-panel">
-          <div class="panel-heading compact-heading">
-            <div><p class="label">财经资讯</p><h3>今日重要线索</h3></div>
-            <span class="pill source-pill">信息整理</span>
-          </div>
-          <ul class="news-list" id="marketNews"></ul>
-        </div>
-      </div>
-
-      <div class="daily-thesis">
-        <div>
-          <span class="daily-thesis-label">今日主线</span>
-          <strong>成长修复与能源风险并行</strong>
-        </div>
-        <p>A股与港股今日由成长方向主导反弹，美股盘中呈指数分化；原油受地缘风险推动大涨，黄金回落，说明资金并非单纯避险，而是在宏观与产业逻辑之间快速切换。</p>
-      </div>
-
-      <div class="macro-release">
-        <span>今日宏观数据</span>
-        <p>美国10月标普全球制造业PMI初值56.0，高于预期；服务业57.9，综合57.6。密歇根大学消费者信心终值48.0，高于预期但略低于前值；5年通胀预期终值3.5%。</p>
-      </div>
     </section>
 
     <section class="dashboard" id="review" aria-live="polite">
@@ -260,6 +212,54 @@
           </thead>
           <tbody id="historyRows"></tbody>
         </table>
+      </div>
+    </section>
+
+    <section class="global-report card" id="daily">
+      <div class="global-report-head">
+        <div>
+          <p class="eyebrow">GLOBAL MARKET BRIEF</p>
+          <h2>今日全球股市日报</h2>
+          <p>覆盖A股收盘、港股收盘、美股当前交易时段及主要宏观资产。</p>
+        </div>
+        <div class="live-status">
+          <i aria-hidden="true"></i>
+          <span id="liveUpdateTime">正在同步最新行情</span>
+        </div>
+      </div>
+
+      <div class="market-groups" id="marketGroups"></div>
+
+      <div class="daily-grid">
+        <div class="macro-panel">
+          <div class="panel-heading compact-heading">
+            <div><p class="label">宏观与大宗</p><h3>跨市场温度计</h3></div>
+            <span class="pill">自动刷新</span>
+          </div>
+          <div id="macroGrid" class="macro-grid"></div>
+          <p class="data-note">汇率、A50、原油、黄金、铜会在页面打开时更新，交易时段每60秒尝试刷新。美债收益率为最近可得数据。</p>
+        </div>
+
+        <div class="news-panel">
+          <div class="panel-heading compact-heading">
+            <div><p class="label">财经资讯</p><h3>今日重要线索</h3></div>
+            <span class="pill source-pill">信息整理</span>
+          </div>
+          <ul class="news-list" id="marketNews"></ul>
+        </div>
+      </div>
+
+      <div class="daily-thesis">
+        <div>
+          <span class="daily-thesis-label">今日主线</span>
+          <strong>成长修复与能源风险并行</strong>
+        </div>
+        <p>A股与港股今日由成长方向主导反弹，美股盘中呈指数分化；原油受地缘风险推动大涨，黄金回落，说明资金并非单纯避险，而是在宏观与产业逻辑之间快速切换。</p>
+      </div>
+
+      <div class="macro-release">
+        <span>今日宏观数据</span>
+        <p>美国10月标普全球制造业PMI初值56.0，高于预期；服务业57.9，综合57.6。密歇根大学消费者信心终值48.0，高于预期但略低于前值；5年通胀预期终值3.5%。</p>
       </div>
     </section>
 
