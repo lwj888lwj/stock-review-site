@@ -1,9 +1,9 @@
-const CACHE_NAME = "horizon-shell-v8";
+const CACHE_NAME = "horizon-shell-v10";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=20261025-market-v3",
-  "./app.js?v=20261025-market-v3",
+  "./styles.css?v=20261025-auto-v2",
+  "./app.js?v=20261025-auto-v2",
   "./manifest.webmanifest",
   "./icons/icon-180.png",
   "./icons/icon-192.png",
@@ -32,6 +32,19 @@ self.addEventListener("fetch", (event) => {
   const request = event.request;
   const url = new URL(request.url);
   if (request.method !== "GET" || url.origin !== self.location.origin) return;
+
+  if (url.pathname.endsWith("/latest.json")) {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          return response;
+        })
+        .catch(() => caches.match(request))
+    );
+    return;
+  }
 
   if (request.mode === "navigate") {
     event.respondWith(

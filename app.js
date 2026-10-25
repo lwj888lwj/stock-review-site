@@ -2291,7 +2291,7 @@ const macroDefinitions = [
   { fixed: true, name: "美国2年期国债", value: 4.70, pct: null, digits: 2, note: "收益率，最近可得" }
 ];
 
-const marketNews = [
+let marketNews = [
   ["美国10月制造业PMI初值56.0，服务业PMI为57.9，综合PMI为57.6，经济景气仍处扩张区间。", "宏观数据 · 23:00 左右"],
   ["美股收盘分化：道指下跌1.23%，标普500下跌0.52%，纳斯达克下跌0.21%；大型科技股相对抗跌。", "美股收盘 · 10/23"],
   ["原油延续强势，WTI升破102美元、布伦特超过116美元，地缘供应风险与运输成本成为主要推手。", "大宗商品 · 23:15"],
@@ -2299,7 +2299,7 @@ const marketNews = [
   ["市场继续关注AI资本开支、科技公司财报与能源价格对通胀预期的二次冲击。", "风险观察 · 今日"]
 ];
 
-const marketSummaryCards = [
+let marketSummaryCards = [
   {
     region: "A股",
     status: "最近收盘 · 10/23",
@@ -2345,7 +2345,7 @@ const marketSummaryCards = [
   }
 ];
 
-const sectorPulseDefinitions = [
+let sectorPulseDefinitions = [
   { id: "601168", driver: "铜价偏强", watch: "29.58 元支撑与 32.77 元压力" },
   { id: "601899", driver: "铜强金弱", watch: "28.50 元附近能否站稳" },
   { id: "000657", driver: "超跌修复", watch: "44.55 元附近均线压力" },
@@ -2356,7 +2356,7 @@ const sectorPulseDefinitions = [
   { id: "603400", driver: "高位宽幅震荡", watch: "39.17 元风险触发位" }
 ];
 
-const dailyOutlookTemplate = [
+let dailyOutlookTemplate = [
   {
     direction: "up",
     title: "修复后的分化",
@@ -2389,7 +2389,7 @@ const dailyOutlookTemplate = [
   }
 ];
 
-const sectorForecasts = [
+let sectorForecasts = [
   { id: "601168", trends: [["up", "修复"], ["side", "分化"], ["down", "回踩"], ["up", "修复"], ["side", "区间"]] },
   { id: "601899", trends: [["up", "铜强"], ["side", "分化"], ["down", "回踩"], ["up", "修复"], ["side", "震荡"]] },
   { id: "000657", trends: [["up", "修复"], ["side", "分化"], ["down", "回踩"], ["up", "修复"], ["side", "区间"]] },
@@ -2602,6 +2602,80 @@ function renderMarketCommand() {
       </tr>
     `;
   }).join("");
+}
+
+function applyPublishedSnapshot(snapshot) {
+  if (!snapshot || snapshot.version !== 1) return false;
+
+  liveMarketGroups.forEach((group) => {
+    const update = snapshot.marketGroups?.find((item) => item.title === group.title);
+    if (!update) return;
+    if (update.status) group.status = update.status;
+    update.rows?.forEach((rowUpdate) => {
+      const row = group.rows.find((item) => item.symbol === rowUpdate.symbol);
+      if (!row) return;
+      if (Number.isFinite(Number(rowUpdate.value))) row.value = Number(rowUpdate.value);
+      if (Number.isFinite(Number(rowUpdate.pct))) row.pct = Number(rowUpdate.pct);
+      if (rowUpdate.time) row.time = rowUpdate.time;
+    });
+  });
+
+  snapshot.macro?.forEach((update) => {
+    const definition = macroDefinitions.find((item) => item.symbol === update.symbol);
+    if (!definition) return;
+    if (Number.isFinite(Number(update.value))) definition.value = Number(update.value);
+    if (Number.isFinite(Number(update.pct))) definition.pct = Number(update.pct);
+    if (update.note) definition.note = update.note;
+  });
+
+  const stockFields = [
+    "price", "previousClose", "open", "high", "low", "change", "changePct",
+    "amount", "turnover", "pe", "pb", "marketCap", "openBias", "openProbability",
+    "openDescription", "openRange", "openTrigger", "volatilityLevel", "volatilityWidth",
+    "volatilityText", "trendLabel", "fundamentalPill", "support1", "resistance1",
+    "resistance2", "supportLabel", "resistanceLabel", "resistance2Label", "thesis",
+    "signals", "movingAverages", "scenarios", "minute", "daily", "history"
+  ];
+  snapshot.stocks?.forEach((stockUpdate) => {
+    const stock = stocks.find((item) => item.id === stockUpdate.id);
+    if (!stock) return;
+    stockFields.forEach((field) => {
+      if (stockUpdate[field] !== undefined) stock[field] = stockUpdate[field];
+    });
+  });
+
+  if (Array.isArray(snapshot.marketNews)) marketNews = snapshot.marketNews;
+  if (Array.isArray(snapshot.marketSummaryCards)) marketSummaryCards = snapshot.marketSummaryCards;
+  if (Array.isArray(snapshot.sectorPulseDefinitions)) sectorPulseDefinitions = snapshot.sectorPulseDefinitions;
+  if (Array.isArray(snapshot.dailyOutlookTemplate) && snapshot.dailyOutlookTemplate.length === 5) {
+    dailyOutlookTemplate = snapshot.dailyOutlookTemplate;
+  }
+  if (Array.isArray(snapshot.sectorForecasts)) sectorForecasts = snapshot.sectorForecasts;
+
+  if (snapshot.marketRead?.title) $("marketReadTitle").textContent = snapshot.marketRead.title;
+  if (snapshot.marketRead?.text) $("marketReadText").textContent = snapshot.marketRead.text;
+  if (snapshot.dailyMainline?.title) $("dailyMainlineTitle").textContent = snapshot.dailyMainline.title;
+  if (snapshot.dailyMainline?.text) $("dailyMainlineText").textContent = snapshot.dailyMainline.text;
+  if (snapshot.macroRelease) $("macroReleaseText").textContent = snapshot.macroRelease;
+  if (snapshot.generatedAt) {
+    $("marketSnapshotLabel").textContent = `自动快照：${snapshot.generatedAt}；下一交易日起按工作日滚动展示五个条件情景。`;
+  }
+
+  renderTabs();
+  renderGlobalReport();
+  renderMarketCommand();
+  render();
+  return true;
+}
+
+async function loadPublishedSnapshot() {
+  try {
+    const response = await fetch(`./latest.json?_=${Date.now()}`, { cache: "no-store" });
+    if (!response.ok) throw new Error("快照不存在");
+    return applyPublishedSnapshot(await response.json());
+  } catch (error) {
+    return false;
+  }
 }
 
 function updateLiveMarketRow(row) {
@@ -2986,5 +3060,11 @@ render();
 renderGlossary();
 setupDialog();
 setupPwa();
-refreshLiveData();
-liveRefreshTimer = window.setInterval(refreshLiveData, 60000);
+
+async function initializeMarketData() {
+  await loadPublishedSnapshot();
+  await refreshLiveData();
+  liveRefreshTimer = window.setInterval(refreshLiveData, 60000);
+}
+
+initializeMarketData();

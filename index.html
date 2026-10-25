@@ -12,7 +12,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./icons/icon-180.png">
-  <link rel="stylesheet" href="./styles.css?v=20261025-market-v3">
+  <link rel="stylesheet" href="./styles.css?v=20261025-auto-v2">
 </head>
 <body>
   <div class="ambient ambient-one"></div>
@@ -67,7 +67,7 @@
         <div>
           <p class="eyebrow">MARKET COMMAND CENTER</p>
           <h2>大盘总结与未来五日推演</h2>
-          <p>基准数据为 2026-10-23 最近收盘；下一交易日起按工作日滚动展示五个条件情景。</p>
+          <p id="marketSnapshotLabel">基准数据为 2026-10-23 最近收盘；下一交易日起按工作日滚动展示五个条件情景。</p>
         </div>
         <div class="command-badge">
           <span>规则模型</span>
@@ -80,9 +80,9 @@
       <div class="market-read">
         <div>
           <span>今日主线</span>
-          <strong>成长修复，资源分化，外部风险仍在</strong>
+          <strong id="marketReadTitle">成长修复，资源分化，外部风险仍在</strong>
         </div>
-        <p>A股与港股的风险偏好明显回升，成长指数强于权重；铜价上涨支撑资源方向，但原油维持高位、黄金回落、美股高位分化，说明市场仍在产业景气和通胀压力之间反复定价。</p>
+        <p id="marketReadText">A股与港股的风险偏好明显回升，成长指数强于权重；铜价上涨支撑资源方向，但原油维持高位、黄金回落、美股高位分化，说明市场仍在产业景气和通胀压力之间反复定价。</p>
       </div>
 
       <div class="command-subhead">
@@ -321,14 +321,14 @@
       <div class="daily-thesis">
         <div>
           <span class="daily-thesis-label">今日主线</span>
-          <strong>成长修复与能源风险并行</strong>
+          <strong id="dailyMainlineTitle">成长修复与能源风险并行</strong>
         </div>
-        <p>A股与港股由成长方向主导反弹，美股收盘呈现指数分化；原油受地缘风险推动大涨，黄金回落，说明资金并非单纯避险，而是在宏观与产业逻辑之间快速切换。</p>
+        <p id="dailyMainlineText">A股与港股由成长方向主导反弹，美股收盘呈现指数分化；原油受地缘风险推动大涨，黄金回落，说明资金并非单纯避险，而是在宏观与产业逻辑之间快速切换。</p>
       </div>
 
       <div class="macro-release">
         <span>今日宏观数据</span>
-        <p>美国10月标普全球制造业PMI初值56.0，高于预期；服务业57.9，综合57.6。密歇根大学消费者信心终值48.0，高于预期但略低于前值；5年通胀预期终值3.5%。</p>
+        <p id="macroReleaseText">美国10月标普全球制造业PMI初值56.0，高于预期；服务业57.9，综合57.6。密歇根大学消费者信心终值48.0，高于预期但略低于前值；5年通胀预期终值3.5%。</p>
       </div>
     </section>
 
@@ -376,6 +376,6 @@
     <button class="primary-button" id="ackInstallModal" type="button">知道了</button>
   </dialog>
 
-  <script src="./app.js?v=20261025-market-v3"></script>
+  <script src="./app.js?v=20261025-auto-v2"></script>
 </body>
 </html>
