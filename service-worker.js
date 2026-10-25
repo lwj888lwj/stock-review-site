@@ -1,9 +1,9 @@
-const CACHE_NAME = "horizon-shell-v5";
+const CACHE_NAME = "horizon-shell-v8";
 const APP_SHELL = [
   "./",
   "./index.html",
-  "./styles.css?v=20261024-colors",
-  "./app.js",
+  "./styles.css?v=20261025-market-v3",
+  "./app.js?v=20261025-market-v3",
   "./manifest.webmanifest",
   "./icons/icon-180.png",
   "./icons/icon-192.png",

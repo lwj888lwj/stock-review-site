@@ -2293,10 +2293,111 @@ const macroDefinitions = [
 
 const marketNews = [
   ["美国10月制造业PMI初值56.0，服务业PMI为57.9，综合PMI为57.6，经济景气仍处扩张区间。", "宏观数据 · 23:00 左右"],
-  ["美股盘中明显分化：道指下跌约1.04%，纳指小幅上涨0.17%；大型科技股经历快速波动。", "美股盘中 · 23:15"],
+  ["美股收盘分化：道指下跌1.23%，标普500下跌0.52%，纳斯达克下跌0.21%；大型科技股相对抗跌。", "美股收盘 · 10/23"],
   ["原油延续强势，WTI升破102美元、布伦特超过116美元，地缘供应风险与运输成本成为主要推手。", "大宗商品 · 23:15"],
   ["A股成长方向强势修复，创业板指上涨4.16%、科创50上涨3.04%，机器人及AI视觉题材领涨。", "A股收盘 · 15:00"],
   ["市场继续关注AI资本开支、科技公司财报与能源价格对通胀预期的二次冲击。", "风险观察 · 今日"]
+];
+
+const marketSummaryCards = [
+  {
+    region: "A股",
+    status: "最近收盘 · 10/23",
+    title: "成长风格明显领先",
+    metrics: [
+      ["上证指数", 3690.48, 0.89],
+      ["深证成指", 11673.83, 2.79],
+      ["创业板指", 2684.10, 4.16]
+    ],
+    note: "创业板与科创50强于权重指数，修复由成长方向带动；后续关键是成交额能否连续放大。"
+  },
+  {
+    region: "港股",
+    status: "最近收盘 · 10/23",
+    title: "科技修复强于主板",
+    metrics: [
+      ["恒生指数", 23093.37, 0.69],
+      ["恒生科技", 3871.66, 2.05]
+    ],
+    note: "恒生科技跑赢恒生指数，说明资金优先回到成长资产；若外围利率继续上行，修复空间可能收窄。"
+  },
+  {
+    region: "美股",
+    status: "最近收盘 · 10/23",
+    title: "高位分化加剧",
+    metrics: [
+      ["道琼斯", 52215.16, -1.23],
+      ["标普500", 7623.68, -0.52],
+      ["纳斯达克", 25955.34, -0.21]
+    ],
+    note: "三大指数同步回落但科技指数相对抗跌，反映资金仍在盈利确定性与利率压力之间摇摆。"
+  },
+  {
+    region: "宏观",
+    status: "最近可得",
+    title: "输入型成本仍有压力",
+    metrics: [
+      ["WTI原油", 102.15, 2.69],
+      ["COMEX铜", 6.4945, 1.51],
+      ["COMEX黄金", 4010.7, -1.22]
+    ],
+    note: "原油和铜同步偏强，有利于资源板块交易，但会增加制造业成本；黄金回落说明避险需求暂时降温。"
+  }
+];
+
+const sectorPulseDefinitions = [
+  { id: "601168", driver: "铜价偏强", watch: "29.58 元支撑与 32.77 元压力" },
+  { id: "601899", driver: "铜强金弱", watch: "28.50 元附近能否站稳" },
+  { id: "000657", driver: "超跌修复", watch: "44.55 元附近均线压力" },
+  { id: "002475", driver: "单日强势领涨", watch: "47.80 元不破则维持强势" },
+  { id: "002384", driver: "低开高走修复", watch: "124.91 元中期压力" },
+  { id: "603986", driver: "存储方向反弹", watch: "284.33 元短线支撑" },
+  { id: "601179", driver: "电网设备转强", watch: "11.49 元突破确认" },
+  { id: "603400", driver: "高位宽幅震荡", watch: "39.17 元风险触发位" }
+];
+
+const dailyOutlookTemplate = [
+  {
+    direction: "up",
+    title: "修复后的分化",
+    note: "承接上周五反弹惯性，成长和资源方向更容易保持活跃，但普涨概率下降。",
+    verify: "A股成交额放大，创业板不弱于上证"
+  },
+  {
+    direction: "side",
+    title: "量能验证日",
+    note: "指数进入压力区后需要新增资金确认，板块轮动速度可能加快。",
+    verify: "上涨家数与成交额同步改善"
+  },
+  {
+    direction: "down",
+    title: "支撑压力测试",
+    note: "短线获利盘可能兑现，优先观察均线和最近低点能否承接。",
+    verify: "回踩不放量，核心板块不集体转弱"
+  },
+  {
+    direction: "up",
+    title: "二次方向选择",
+    note: "若前一日回踩获得支撑，资金可能重新回流景气板块。",
+    verify: "强势板块重新放量，人民币不快速走弱"
+  },
+  {
+    direction: "side",
+    title: "周内趋势确认",
+    note: "市场将确认本周属于趋势延续，还是区间震荡与板块轮动。",
+    verify: "周线位置、北向替代指标与商品价格"
+  }
+];
+
+const sectorForecasts = [
+  { id: "601168", trends: [["up", "修复"], ["side", "分化"], ["down", "回踩"], ["up", "修复"], ["side", "区间"]] },
+  { id: "601899", trends: [["up", "铜强"], ["side", "分化"], ["down", "回踩"], ["up", "修复"], ["side", "震荡"]] },
+  { id: "000657", trends: [["up", "修复"], ["side", "分化"], ["down", "回踩"], ["up", "修复"], ["side", "区间"]] },
+  { id: "002475", trends: [["up", "偏强"], ["side", "分化"], ["down", "回吐"], ["up", "修复"], ["side", "震荡"]] },
+  { id: "002384", trends: [["up", "超跌修复"], ["side", "分化"], ["down", "确认"], ["up", "修复"], ["side", "震荡"]] },
+  { id: "603986", trends: [["up", "修复"], ["down", "回落"], ["side", "震荡"], ["up", "修复"], ["side", "分化"]] },
+  { id: "601179", trends: [["side", "偏强"], ["up", "突破"], ["side", "确认"], ["down", "回踩"], ["up", "修复"]] },
+  { id: "603400", trends: [["side", "宽幅"], ["down", "释放"], ["up", "反抽"], ["side", "分化"], ["down", "承压"]] }
 ];
 
 const liveQuoteSymbols = [
@@ -2364,10 +2465,37 @@ function quoteTimestamp(raw) {
   return `${compact.slice(4, 6)}/${compact.slice(6, 8)} ${compact.slice(8, 10)}:${compact.slice(10, 12)}`;
 }
 
+function marketGroupStatus(title, raw) {
+  if (!raw) return "时间未知";
+  const compact = raw.replace(/\D/g, "").slice(0, 14);
+  if (compact.length < 12) return "时间未知";
+  const month = compact.slice(4, 6);
+  const day = compact.slice(6, 8);
+  const hour = Number(compact.slice(8, 10));
+  const minute = Number(compact.slice(10, 12));
+  const clock = hour * 60 + minute;
+  const today = new Date();
+  const sourceDate = `${compact.slice(0, 4)}-${month}-${day}`;
+  const todayDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+  const sameDay = sourceDate === todayDate;
+
+  if (title.includes("A股")) {
+    if (sameDay && clock < 15 * 60) return `盘中 · ${month}/${day} ${hour}:${String(minute).padStart(2, "0")}`;
+    return `${sameDay ? "今日" : "最近"}收盘 · ${month}/${day}`;
+  }
+  if (title.includes("港股")) {
+    if (sameDay && clock < 16 * 60) return `盘中 · ${month}/${day} ${hour}:${String(minute).padStart(2, "0")}`;
+    return `${sameDay ? "今日" : "最近"}收盘 · ${month}/${day}`;
+  }
+  if (clock >= 16 * 60) return `收盘 · ${month}/${day} 美东`;
+  if (clock >= 9 * 60 + 30) return `盘中 · ${month}/${day} 美东`;
+  return `盘前/最近 · ${month}/${day} 美东`;
+}
+
 function renderGlobalReport() {
   $("marketGroups").innerHTML = liveMarketGroups.map((group) => `
     <article class="market-group">
-      <div class="market-group-head"><strong>${group.title}</strong><span>${group.status}</span></div>
+      <div class="market-group-head"><strong>${group.title}</strong><span data-market-status="${group.title}">${group.status}</span></div>
       ${group.rows.map((row) => `
         <div class="market-row ${row.pct >= 0 ? "positive-live" : "negative-live"}" data-market-symbol="${row.symbol}">
           <span class="name">${row.name}</span>
@@ -2389,6 +2517,91 @@ function renderGlobalReport() {
   $("marketNews").innerHTML = marketNews.map(([text, time]) => `
     <li>${text}<time>${time}</time></li>
   `).join("");
+}
+
+function nextWeekdays(count = 5) {
+  const dates = [];
+  const cursor = new Date();
+  cursor.setHours(12, 0, 0, 0);
+  while (dates.length < count) {
+    cursor.setDate(cursor.getDate() + 1);
+    if (cursor.getDay() !== 0 && cursor.getDay() !== 6) dates.push(new Date(cursor));
+  }
+  return dates;
+}
+
+function formatForecastDate(date) {
+  const weekdays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
+  return `${String(date.getMonth() + 1).padStart(2, "0")}/${String(date.getDate()).padStart(2, "0")} ${weekdays[date.getDay()]}`;
+}
+
+function forecastSymbol(direction) {
+  return direction === "up" ? "↗" : direction === "down" ? "↘" : "→";
+}
+
+function renderMarketCommand() {
+  $("marketSummaryGrid").innerHTML = marketSummaryCards.map((card) => `
+    <article class="market-summary-card">
+      <div class="summary-card-head">
+        <span>${card.region}</span>
+        <small>${card.status}</small>
+      </div>
+      <h3>${card.title}</h3>
+      <div class="summary-metrics">
+        ${card.metrics.map(([name, value, pct]) => `
+          <div><span>${name}</span><strong>${formatNumber(value, Math.abs(value) < 10 ? 4 : 2)}</strong><em class="${pct >= 0 ? "positive" : "negative"}">${formatChange(pct)}</em></div>
+        `).join("")}
+      </div>
+      <p>${card.note}</p>
+    </article>
+  `).join("");
+
+  $("sectorPulseGrid").innerHTML = sectorPulseDefinitions.map((definition) => {
+    const stock = stocks.find((item) => item.id === definition.id);
+    if (!stock) return "";
+    const state = stock.changePct >= 4 ? "强势" : stock.changePct > 0 ? "修复" : "承压";
+    return `
+      <article class="sector-pulse-card">
+        <div class="sector-pulse-head">
+          <div><span>${stock.sector}</span><small>${stock.name}</small></div>
+          <strong class="${stock.changePct >= 0 ? "positive" : "negative"}">${formatChange(stock.changePct)}</strong>
+        </div>
+        <div class="sector-state"><b>${state}</b><span>${definition.driver}</span></div>
+        <p>${definition.watch}</p>
+      </article>
+    `;
+  }).join("");
+
+  const dates = nextWeekdays(5);
+  $("forecastRangeLabel").textContent = `${formatForecastDate(dates[0]).slice(0, 5)}—${formatForecastDate(dates[4]).slice(0, 5)}`;
+  $("forecastTimeline").innerHTML = dates.map((date, index) => {
+    const item = dailyOutlookTemplate[index];
+    return `
+      <article class="forecast-day ${item.direction}">
+        <div class="forecast-day-top"><span>DAY ${index + 1}</span><time>${formatForecastDate(date)}</time></div>
+        <b class="forecast-arrow">${forecastSymbol(item.direction)}</b>
+        <h3>${item.title}</h3>
+        <p>${item.note}</p>
+        <small>验证：${item.verify}</small>
+      </article>
+    `;
+  }).join("");
+
+  $("forecastHead").innerHTML = `
+    <tr><th>板块 / 个股</th>${dates.map((date, index) => `<th><span>DAY ${index + 1}</span>${formatForecastDate(date)}</th>`).join("")}</tr>
+  `;
+  $("forecastBody").innerHTML = sectorForecasts.map((row) => {
+    const stock = stocks.find((item) => item.id === row.id);
+    if (!stock) return "";
+    return `
+      <tr>
+        <th><strong>${stock.sector}</strong><span>${stock.name}</span></th>
+        ${row.trends.map(([direction, label]) => `
+          <td><span class="trend-pill ${direction}">${forecastSymbol(direction)} ${label}</span></td>
+        `).join("")}
+      </tr>
+    `;
+  }).join("");
 }
 
 function updateLiveMarketRow(row) {
@@ -2495,6 +2708,14 @@ async function refreshLiveData() {
     for (const match of raw.matchAll(/v_([A-Za-z0-9_]+)="([^"]*)"/g)) {
       quotePayloads[match[1]] = match[2];
     }
+    liveMarketGroups.forEach((group) => {
+      const groupQuote = group.rows
+        .map((row) => quotePayloads[row.symbol])
+        .find((payload) => typeof payload === "string");
+      const groupTimestamp = groupQuote?.split("~")[30] || "";
+      const status = document.querySelector(`[data-market-status="${group.title}"]`);
+      if (status) status.textContent = marketGroupStatus(group.title, groupTimestamp);
+    });
     let latestTimestamp = "";
     liveQuoteSymbols.forEach((symbol) => {
       const quote = parseTencentQuote(quotePayloads[symbol], symbol);
@@ -2519,6 +2740,7 @@ async function refreshLiveData() {
     });
     renderTabs();
     render();
+    renderMarketCommand();
     $("liveUpdateTime").textContent = `行情已同步 · ${new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" })}`;
   } catch (error) {
     $("liveUpdateTime").textContent = "实时源暂不可用，显示最近快照";
@@ -2759,6 +2981,7 @@ $("toggleGlossary").addEventListener("click", () => {
 
 renderTabs();
 renderGlobalReport();
+renderMarketCommand();
 render();
 renderGlossary();
 setupDialog();
