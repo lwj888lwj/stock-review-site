@@ -2356,49 +2356,24 @@ let sectorPulseDefinitions = [
   { id: "603400", driver: "高位宽幅震荡", watch: "39.17 元风险触发位" }
 ];
 
-let dailyOutlookTemplate = [
-  {
-    direction: "up",
-    title: "修复后的分化",
-    note: "承接上周五反弹惯性，成长和资源方向更容易保持活跃，但普涨概率下降。",
-    verify: "A股成交额放大，创业板不弱于上证"
-  },
-  {
-    direction: "side",
-    title: "量能验证日",
-    note: "指数进入压力区后需要新增资金确认，板块轮动速度可能加快。",
-    verify: "上涨家数与成交额同步改善"
-  },
-  {
-    direction: "down",
-    title: "支撑压力测试",
-    note: "短线获利盘可能兑现，优先观察均线和最近低点能否承接。",
-    verify: "回踩不放量，核心板块不集体转弱"
-  },
-  {
-    direction: "up",
-    title: "二次方向选择",
-    note: "若前一日回踩获得支撑，资金可能重新回流景气板块。",
-    verify: "强势板块重新放量，人民币不快速走弱"
-  },
-  {
-    direction: "side",
-    title: "周内趋势确认",
-    note: "市场将确认本周属于趋势延续，还是区间震荡与板块轮动。",
-    verify: "周线位置、北向替代指标与商品价格"
-  }
-];
-
-let sectorForecasts = [
-  { id: "601168", trends: [["up", "修复"], ["side", "分化"], ["down", "回踩"], ["up", "修复"], ["side", "区间"]] },
-  { id: "601899", trends: [["up", "铜强"], ["side", "分化"], ["down", "回踩"], ["up", "修复"], ["side", "震荡"]] },
-  { id: "000657", trends: [["up", "修复"], ["side", "分化"], ["down", "回踩"], ["up", "修复"], ["side", "区间"]] },
-  { id: "002475", trends: [["up", "偏强"], ["side", "分化"], ["down", "回吐"], ["up", "修复"], ["side", "震荡"]] },
-  { id: "002384", trends: [["up", "超跌修复"], ["side", "分化"], ["down", "确认"], ["up", "修复"], ["side", "震荡"]] },
-  { id: "603986", trends: [["up", "修复"], ["down", "回落"], ["side", "震荡"], ["up", "修复"], ["side", "分化"]] },
-  { id: "601179", trends: [["side", "偏强"], ["up", "突破"], ["side", "确认"], ["down", "回踩"], ["up", "修复"]] },
-  { id: "603400", trends: [["side", "宽幅"], ["down", "释放"], ["up", "反抽"], ["side", "分化"], ["down", "承压"]] }
-];
+let tomorrowAnalysis = {
+  dateLabel: "下一交易日",
+  bias: "震荡偏强",
+  probability: 56,
+  summary: "市场处于修复后的分化阶段，重点观察成交额和成长指数能否继续领先。",
+  openRange: "下一交易日开盘参考区间生成中",
+  support1: "—",
+  support2: "—",
+  resistance1: "—",
+  resistance2: "—",
+  trigger: "等待自动快照更新",
+  invalidation: "等待自动快照更新",
+  scenarios: [
+    { tag: "基准", title: "震荡整理", probability: 52, description: "指数围绕最近收盘附近换手。", trigger: "成交额保持常态" },
+    { tag: "强势", title: "放量上攻", probability: 24, description: "成长方向继续领涨，指数突破短线压力。", trigger: "必须放量确认" },
+    { tag: "谨慎", title: "回踩支撑", probability: 24, description: "若外围风险升温，指数回踩近期低点。", trigger: "跌破支撑需谨慎" }
+  ]
+};
 
 const liveQuoteSymbols = [
   "sh000001", "sz399001", "sz399006", "sh000688",
@@ -2519,26 +2494,6 @@ function renderGlobalReport() {
   `).join("");
 }
 
-function nextWeekdays(count = 5) {
-  const dates = [];
-  const cursor = new Date();
-  cursor.setHours(12, 0, 0, 0);
-  while (dates.length < count) {
-    cursor.setDate(cursor.getDate() + 1);
-    if (cursor.getDay() !== 0 && cursor.getDay() !== 6) dates.push(new Date(cursor));
-  }
-  return dates;
-}
-
-function formatForecastDate(date) {
-  const weekdays = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
-  return `${String(date.getMonth() + 1).padStart(2, "0")}/${String(date.getDate()).padStart(2, "0")} ${weekdays[date.getDay()]}`;
-}
-
-function forecastSymbol(direction) {
-  return direction === "up" ? "↗" : direction === "down" ? "↘" : "→";
-}
-
 function renderMarketCommand() {
   $("marketSummaryGrid").innerHTML = marketSummaryCards.map((card) => `
     <article class="market-summary-card">
@@ -2559,47 +2514,45 @@ function renderMarketCommand() {
   $("sectorPulseGrid").innerHTML = sectorPulseDefinitions.map((definition) => {
     const stock = stocks.find((item) => item.id === definition.id);
     if (!stock) return "";
-    const state = stock.changePct >= 4 ? "强势" : stock.changePct > 0 ? "修复" : "承压";
+    const state = definition.bias || (stock.changePct >= 4 ? "偏强" : stock.changePct > 0 ? "修复" : "承压");
     return `
       <article class="sector-pulse-card">
         <div class="sector-pulse-head">
           <div><span>${stock.sector}</span><small>${stock.name}</small></div>
           <strong class="${stock.changePct >= 0 ? "positive" : "negative"}">${formatChange(stock.changePct)}</strong>
         </div>
-        <div class="sector-state"><b>${state}</b><span>${definition.driver}</span></div>
+        <div class="sector-state"><b>${state}</b><span>${definition.priority ? `优先级 ${definition.priority} · ` : ""}${definition.driver}</span></div>
         <p>${definition.watch}</p>
       </article>
     `;
   }).join("");
 
-  const dates = nextWeekdays(5);
-  $("forecastRangeLabel").textContent = `${formatForecastDate(dates[0]).slice(0, 5)}—${formatForecastDate(dates[4]).slice(0, 5)}`;
-  $("forecastTimeline").innerHTML = dates.map((date, index) => {
-    const item = dailyOutlookTemplate[index];
-    return `
-      <article class="forecast-day ${item.direction}">
-        <div class="forecast-day-top"><span>DAY ${index + 1}</span><time>${formatForecastDate(date)}</time></div>
-        <b class="forecast-arrow">${forecastSymbol(item.direction)}</b>
-        <h3>${item.title}</h3>
-        <p>${item.note}</p>
-        <small>验证：${item.verify}</small>
-      </article>
-    `;
-  }).join("");
-
-  $("forecastHead").innerHTML = `
-    <tr><th>板块 / 个股</th>${dates.map((date, index) => `<th><span>DAY ${index + 1}</span>${formatForecastDate(date)}</th>`).join("")}</tr>
+  const analysis = tomorrowAnalysis;
+  $("tomorrowDateLabel").textContent = analysis.dateLabel;
+  $("tomorrowDecision").innerHTML = `
+    <div class="tomorrow-verdict">
+      <span>明日基准结论</span>
+      <h3>${analysis.bias}</h3>
+      <p>${analysis.summary}</p>
+      <div class="tomorrow-probability"><strong>${analysis.probability}%</strong><span>基准情景概率</span></div>
+    </div>
+    <div class="tomorrow-levels">
+      <div><span>开盘参考区间</span><strong>${analysis.openRange}</strong></div>
+      <div><span>第一 / 第二支撑</span><strong>${analysis.support1} / ${analysis.support2}</strong></div>
+      <div><span>第一 / 第二压力</span><strong>${analysis.resistance1} / ${analysis.resistance2}</strong></div>
+      <div><span>确认信号</span><strong>${analysis.trigger}</strong></div>
+      <div><span>失效条件</span><strong>${analysis.invalidation}</strong></div>
+    </div>
   `;
-  $("forecastBody").innerHTML = sectorForecasts.map((row) => {
-    const stock = stocks.find((item) => item.id === row.id);
-    if (!stock) return "";
+  $("tomorrowScenarioGrid").innerHTML = analysis.scenarios.map((scenario, index) => {
+    const tone = scenario.tag === "强势" ? "up" : scenario.tag === "谨慎" ? "down" : "side";
     return `
-      <tr>
-        <th><strong>${stock.sector}</strong><span>${stock.name}</span></th>
-        ${row.trends.map(([direction, label]) => `
-          <td><span class="trend-pill ${direction}">${forecastSymbol(direction)} ${label}</span></td>
-        `).join("")}
-      </tr>
+      <article class="tomorrow-scenario ${tone}">
+        <div class="tomorrow-scenario-head"><span>0${index + 1} · ${scenario.tag}</span><b>${scenario.probability}%</b></div>
+        <h3>${scenario.title}</h3>
+        <p>${scenario.description}</p>
+        <small>${scenario.trigger}</small>
+      </article>
     `;
   }).join("");
 }
@@ -2647,10 +2600,7 @@ function applyPublishedSnapshot(snapshot) {
   if (Array.isArray(snapshot.marketNews)) marketNews = snapshot.marketNews;
   if (Array.isArray(snapshot.marketSummaryCards)) marketSummaryCards = snapshot.marketSummaryCards;
   if (Array.isArray(snapshot.sectorPulseDefinitions)) sectorPulseDefinitions = snapshot.sectorPulseDefinitions;
-  if (Array.isArray(snapshot.dailyOutlookTemplate) && snapshot.dailyOutlookTemplate.length === 5) {
-    dailyOutlookTemplate = snapshot.dailyOutlookTemplate;
-  }
-  if (Array.isArray(snapshot.sectorForecasts)) sectorForecasts = snapshot.sectorForecasts;
+  if (snapshot.tomorrowAnalysis) tomorrowAnalysis = snapshot.tomorrowAnalysis;
 
   if (snapshot.marketRead?.title) $("marketReadTitle").textContent = snapshot.marketRead.title;
   if (snapshot.marketRead?.text) $("marketReadText").textContent = snapshot.marketRead.text;
@@ -2658,7 +2608,7 @@ function applyPublishedSnapshot(snapshot) {
   if (snapshot.dailyMainline?.text) $("dailyMainlineText").textContent = snapshot.dailyMainline.text;
   if (snapshot.macroRelease) $("macroReleaseText").textContent = snapshot.macroRelease;
   if (snapshot.generatedAt) {
-    $("marketSnapshotLabel").textContent = `自动快照：${snapshot.generatedAt}；下一交易日起按工作日滚动展示五个条件情景。`;
+    $("marketSnapshotLabel").textContent = `自动快照：${snapshot.generatedAt}；分析对象：${snapshot.tomorrowAnalysis?.dateLabel || "下一交易日"}。`;
   }
 
   renderTabs();

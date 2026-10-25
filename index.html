@@ -12,7 +12,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./icons/icon-180.png">
-  <link rel="stylesheet" href="./styles.css?v=20261025-auto-v2">
+  <link rel="stylesheet" href="./styles.css?v=20261025-tomorrow-v1">
 </head>
 <body>
   <div class="ambient ambient-one"></div>
@@ -54,7 +54,7 @@
       <div>
         <p class="eyebrow">MARKET FIRST · STOCK SECOND</p>
         <h1>先看大盘方向，再拆个股机会</h1>
-        <p class="workspace-subtitle">大盘总结、板块轮动与未来五个交易日推演集中呈现，再进入个股收盘复盘。预测均为条件情景，不构成确定性判断。</p>
+        <p class="workspace-subtitle">先总结最新大盘，再给出下一交易日的概率、关键区间和板块优先级，随后进入个股收盘复盘。分析均为条件情景，不构成确定性判断。</p>
       </div>
       <div class="workspace-meta">
         <span>2026.10.23</span>
@@ -66,8 +66,8 @@
       <div class="command-head">
         <div>
           <p class="eyebrow">MARKET COMMAND CENTER</p>
-          <h2>大盘总结与未来五日推演</h2>
-          <p id="marketSnapshotLabel">基准数据为 2026-10-23 最近收盘；下一交易日起按工作日滚动展示五个条件情景。</p>
+          <h2>大盘总结与明日分析</h2>
+          <p id="marketSnapshotLabel">基准数据为 2026-10-23 最近收盘；分析对象为下一交易日。</p>
         </div>
         <div class="command-badge">
           <span>规则模型</span>
@@ -88,7 +88,7 @@
       <div class="command-subhead">
         <div>
           <span class="command-index">01</span>
-          <div><strong>板块强弱地图</strong><small>按网站现有 8 只个股映射，不代表全市场行业指数</small></div>
+          <div><strong>明日板块强弱与优先级</strong><small>按现有 8 只个股映射，结合收盘位置、均线和动能排序</small></div>
         </div>
         <span class="pill">自选样本</span>
       </div>
@@ -97,18 +97,12 @@
       <div class="command-subhead">
         <div>
           <span class="command-index">02</span>
-          <div><strong>下一交易日起 5 日路径</strong><small>每日方向会随市场验证，不是固定涨跌承诺</small></div>
+          <div><strong>明日大盘情景</strong><small>给出概率、开盘参考区间、触发条件和失效条件</small></div>
         </div>
-        <span class="pill" id="forecastRangeLabel">生成中</span>
+        <span class="pill" id="tomorrowDateLabel">下一交易日</span>
       </div>
-      <div class="forecast-timeline" id="forecastTimeline"></div>
-
-      <div class="forecast-matrix-wrap">
-        <table class="forecast-matrix">
-          <thead id="forecastHead"></thead>
-          <tbody id="forecastBody"></tbody>
-        </table>
-      </div>
+      <div class="tomorrow-decision" id="tomorrowDecision"></div>
+      <div class="tomorrow-scenario-grid" id="tomorrowScenarioGrid"></div>
 
       <div class="forecast-rules">
         <strong>观察顺序</strong>
@@ -117,7 +111,7 @@
         <span>③ 铜价与油价方向</span>
         <span>④ 美债收益率和人民币波动</span>
       </div>
-      <p class="forecast-disclaimer">以上为根据最近收盘、技术动能、商品价格与跨市场风险生成的条件路线；不含确定价格点位，不保证未来走势。</p>
+      <p class="forecast-disclaimer">以上为根据最近收盘、均线、相对强弱、商品价格与跨市场风险生成的下一交易日条件推演；概率和区间不保证兑现。</p>
     </section>
 
     <section class="stock-switcher" aria-label="股票池">
@@ -376,6 +370,6 @@
     <button class="primary-button" id="ackInstallModal" type="button">知道了</button>
   </dialog>
 
-  <script src="./app.js?v=20261025-auto-v2"></script>
+  <script src="./app.js?v=20261025-tomorrow-v1"></script>
 </body>
 </html>

@@ -99,6 +99,16 @@ def fetch_market(symbol):
     return symbol, minute["data"][symbol]["data"]["data"], daily["data"][symbol]
 
 
+def fetch_index_history(symbol):
+    payload = fetch_json(
+        f"https://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param={symbol},day,,,45,qfq"
+    )["data"][symbol]
+    rows = payload.get("day") or payload.get("qfqday")
+    if not rows or len(rows) < 20:
+        raise RuntimeError(f"insufficient index history for {symbol}")
+    return symbol, rows
+
+
 def ema(values, period):
     multiplier = 2 / (period + 1)
     result = [values[0]]
@@ -349,14 +359,113 @@ def build_stock(definition, quote, minute_rows, daily_payload):
     }
 
 
-def make_trends(score):
-    if score >= 4:
-        return [["up", "偏强"], ["side", "分化"], ["down", "回踩"], ["up", "修复"], ["side", "震荡"]]
-    if score >= 1:
-        return [["up", "修复"], ["side", "分化"], ["down", "确认"], ["up", "修复"], ["side", "区间"]]
-    if score <= -4:
-        return [["down", "承压"], ["side", "弱整理"], ["up", "反抽"], ["down", "再确认"], ["side", "区间"]]
-    return [["side", "震荡"], ["down", "回踩"], ["up", "修复"], ["side", "分化"], ["down", "承压"]]
+def build_tomorrow_analysis(quotes, index_histories, stock_updates, commodities):
+    rows = index_histories["sh000001"]
+    closes = [float(row[2]) for row in rows]
+    price = quotes["sh000001"]["price"]
+    ma5, ma10, ma20 = [statistics.mean(closes[-period:]) for period in (5, 10, 20)]
+    ten_day_low = min(float(row[4]) for row in rows[-10:])
+    twenty_day_high = max(float(row[3]) for row in rows[-20:])
+    true_ranges = []
+    for index in range(max(1, len(rows) - 14), len(rows)):
+        row = rows[index]
+        previous_close = float(rows[index - 1][2])
+        true_ranges.append(
+            max(
+                float(row[3]) - float(row[4]),
+                abs(float(row[3]) - previous_close),
+                abs(float(row[4]) - previous_close),
+            )
+        )
+    atr_pct = statistics.mean(true_ranges) / price * 100
+
+    support_candidates = [
+        value
+        for value in (quotes["sh000001"]["previousClose"], ma5, ma10, ma20, ten_day_low)
+        if value < price
+    ]
+    resistance_candidates = [value for value in (ma5, ma10, ma20, twenty_day_high) if value > price]
+    support = max(support_candidates) if support_candidates else ten_day_low
+    resistance = min(resistance_candidates) if resistance_candidates else price * (1 + atr_pct / 100)
+    support2 = min(ten_day_low, ma20)
+    resistance2 = max(twenty_day_high, ma20)
+
+    average_index_change = statistics.mean(quotes[symbol]["pct"] for symbol in A_SYMBOLS)
+    positive_indices = sum(1 for symbol in A_SYMBOLS if quotes[symbol]["pct"] > 0)
+    positive_stocks = sum(1 for item in stock_updates if item["changePct"] > 0)
+    us_average = statistics.mean(quotes[symbol]["pct"] for symbol in US_SYMBOLS)
+    commodity_penalty = -2 if commodities["hf_CL"]["pct"] > 3 else 0
+    probability = round(
+        clamp(
+            50
+            + average_index_change * 2
+            + (positive_indices - 2) * 2
+            + (positive_stocks - len(stock_updates) / 2)
+            + (2 if price > ma20 else -2)
+            + (-2 if us_average < -0.8 else 0)
+            + commodity_penalty,
+            45,
+            68,
+        )
+    )
+
+    if average_index_change >= 1.5 and positive_indices >= 3:
+        bias = "偏强震荡"
+        summary = "成长指数和多数自选板块同步走强，下一交易日仍有惯性，但接近压力位后更看重成交量。"
+    elif average_index_change >= 0:
+        bias = "震荡偏强"
+        summary = "市场结构偏多但指数尚未形成单边趋势，下一交易日更可能在支撑与压力之间反复确认。"
+    elif average_index_change <= -1:
+        bias = "低开修复"
+        summary = "指数承压后需要先确认低位承接，若支撑有效才具备修复条件。"
+    else:
+        bias = "区间震荡"
+        summary = "指数与板块分化，方向性不足，下一交易日重点看成交量能否打破平衡。"
+
+    open_width = max(atr_pct * 0.3, 0.7) / 100
+    open_range = f"{price * (1 - open_width):.1f}—{price * (1 + open_width):.1f}"
+    high_probability = round((100 - probability) * 0.55)
+    risk_probability = 100 - probability - high_probability
+    date_label = next_trading_day().strftime("%-m月%-d日")
+    weekdays = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+    date_label = f"{date_label} {weekdays[next_trading_day().weekday()]}"
+
+    return {
+        "dateLabel": date_label,
+        "bias": bias,
+        "probability": probability,
+        "summary": summary,
+        "openRange": open_range,
+        "support1": f"{support:.2f}",
+        "support2": f"{support2:.2f}",
+        "resistance1": f"{resistance:.2f}",
+        "resistance2": f"{resistance2:.2f}",
+        "trigger": f"站上 {resistance:.2f} 且成交额放大，偏强情景确认",
+        "invalidation": f"跌破 {support:.2f} 后不能快速收回，偏强判断失效",
+        "scenarios": [
+            {
+                "tag": "基准",
+                "title": "支撑上方震荡",
+                "probability": probability,
+                "description": f"指数在 {support:.2f}—{resistance:.2f} 区间内换手，板块继续分化。",
+                "trigger": f"守住 {support:.2f}，成交额不明显萎缩",
+            },
+            {
+                "tag": "强势",
+                "title": "放量突破压力",
+                "probability": high_probability,
+                "description": f"成长与资源方向同步走强，指数向上测试 {resistance:.2f}。",
+                "trigger": f"放量站稳 {resistance:.2f}",
+            },
+            {
+                "tag": "谨慎",
+                "title": "跌破支撑回踩",
+                "probability": risk_probability,
+                "description": f"外围风险或高估值板块回落，指数跌破 {support:.2f}。",
+                "trigger": f"放量跌破 {support:.2f} 且 30 分钟内未收复",
+            },
+        ],
+    }
 
 
 def build_market_summary(quotes, commodities):
@@ -405,14 +514,11 @@ def build_market_summary(quotes, commodities):
     return cards
 
 
-def next_trading_days(count=5):
+def next_trading_day():
     current = datetime.now(BEIJING).date() + timedelta(days=1)
-    result = []
-    while len(result) < count:
-        if current.weekday() < 5:
-            result.append(current)
+    while current.weekday() >= 5:
         current += timedelta(days=1)
-    return result
+    return current
 
 
 def main():
@@ -426,6 +532,8 @@ def main():
             symbol: (minute, daily)
             for symbol, minute, daily in executor.map(fetch_market, [item[0] for item in STOCK_DEFINITIONS])
         }
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+        index_histories = dict(executor.map(fetch_index_history, A_SYMBOLS))
 
     stock_updates = []
     for definition in STOCK_DEFINITIONS:
@@ -435,29 +543,17 @@ def main():
 
     a_average = statistics.mean([quotes[symbol]["pct"] for symbol in A_SYMBOLS])
     breadth_positive = sum(1 for item in stock_updates if item["changePct"] > 0)
-    first_direction = "up" if a_average > 0.3 and breadth_positive >= 4 else "down" if a_average < -0.3 else "side"
-    first_title = "修复后的分化" if first_direction == "up" else "弱势后的修复确认" if first_direction == "down" else "分化中的区间整理"
-    daily_outlook = [
-        {"direction": first_direction, "title": first_title, "note": f"A股主要指数平均涨跌幅 {a_average:+.2f}%，自选股上涨 {breadth_positive}/{len(stock_updates)} 只；先看惯性能否延续。", "verify": "A股成交额放大，创业板不弱于上证"},
-        {"direction": "side", "title": "量能验证日", "note": "指数进入压力区后需要新增资金确认，板块轮动速度可能加快。", "verify": "上涨家数与成交额同步改善"},
-        {"direction": "down", "title": "支撑压力测试", "note": "短线获利盘可能兑现，优先观察均线和最近低点能否承接。", "verify": "回踩不放量，核心板块不集体转弱"},
-        {"direction": "up", "title": "二次方向选择", "note": "若前一日回踩获得支撑，资金可能重新回流景气板块。", "verify": "强势板块重新放量，人民币不快速走弱"},
-        {"direction": "side", "title": "周内趋势确认", "note": "市场将确认本轮属于趋势延续，还是区间震荡与板块轮动。", "verify": "周线位置、商品价格和外围利率"},
-    ]
-    sector_forecasts = [
-        {
-            "id": item["id"],
-            "trends": make_trends(item["_analysis"]["score"]),
-        }
-        for item in stock_updates
-    ]
+    tomorrow_analysis = build_tomorrow_analysis(quotes, index_histories, stock_updates, commodities)
+    ranked_stocks = sorted(stock_updates, key=lambda item: item["_analysis"]["score"], reverse=True)
     sector_pulse = [
         {
             "id": item["id"],
+            "bias": "偏强" if item["_analysis"]["score"] >= 4 else "修复" if item["_analysis"]["score"] >= 1 else "承压" if item["_analysis"]["score"] <= -4 else "震荡",
+            "priority": index + 1,
             "driver": item["_analysis"]["driver"],
             "watch": item["_analysis"]["watch"],
         }
-        for item in stock_updates
+        for index, item in enumerate(ranked_stocks)
     ]
 
     generated_label = now.strftime("%Y-%m-%d %H:%M")
@@ -497,8 +593,7 @@ def main():
         "macroRelease": f"自动快照生成于 {generated_label}。宏观日历与公司公告未由本任务抓取，涉及最新事件请以官方发布为准。",
         "marketNews": market_news,
         "sectorPulseDefinitions": sector_pulse,
-        "dailyOutlookTemplate": daily_outlook,
-        "sectorForecasts": sector_forecasts,
+        "tomorrowAnalysis": tomorrow_analysis,
     }
 
     snapshot_path = ROOT / "latest.json"
@@ -506,7 +601,6 @@ def main():
     temporary_path.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n")
     temporary_path.replace(snapshot_path)
 
-    dates = next_trading_days()
     report_lines = [
         "# 地平线 · 每日股市简报",
         "",
@@ -520,13 +614,29 @@ def main():
     for card in snapshot["marketSummaryCards"]:
         metrics = "；".join(f"{name} {value}（{pct:+.2f}%）" for name, value, pct in card["metrics"])
         report_lines.extend([f"### {card['region']} · {card['title']}", "", f"{metrics}。", "", card["note"], ""])
-    report_lines.extend(["## 未来五个工作日条件路径", ""])
-    for date, item in zip(dates, daily_outlook):
-        report_lines.append(f"- {date:%m/%d}：{item['title']}；验证条件：{item['verify']}")
-    report_lines.extend(["", "## 板块与个股", ""])
-    for item, forecast in zip(stock_updates, sector_forecasts):
-        directions = " → ".join(label for _, label in forecast["trends"])
-        report_lines.append(f"- {item['sector']} / {item['id']}：收盘 {item['price']:.2f}，涨跌 {item['changePct']:+.2f}%；五日模型：{directions}")
+    report_lines.extend(
+        [
+            f"## 明日分析 · {tomorrow_analysis['dateLabel']}",
+            "",
+            f"**{tomorrow_analysis['bias']}（{tomorrow_analysis['probability']}%）**",
+            "",
+            tomorrow_analysis["summary"],
+            "",
+            f"- 开盘参考：{tomorrow_analysis['openRange']}",
+            f"- 第一 / 第二支撑：{tomorrow_analysis['support1']} / {tomorrow_analysis['support2']}",
+            f"- 第一 / 第二压力：{tomorrow_analysis['resistance1']} / {tomorrow_analysis['resistance2']}",
+            f"- 确认信号：{tomorrow_analysis['trigger']}",
+            f"- 失效条件：{tomorrow_analysis['invalidation']}",
+            "",
+            "## 明日板块优先级",
+            "",
+        ]
+    )
+    for definition in sector_pulse:
+        item = next(stock for stock in stock_updates if stock["id"] == definition["id"])
+        report_lines.append(
+            f"{definition['priority']}. {item['sector']} / {item['id']}：{definition['bias']}；观察 {definition['watch']}"
+        )
     report_lines.extend(["", snapshot["macroRelease"], ""])
     (ROOT / "DAILY_REPORT_LATEST.md").write_text("\n".join(report_lines))
     print(json.dumps({"generatedAt": generated_label, "stocks": len(stock_updates), "indices": len(A_SYMBOLS + HK_SYMBOLS + US_SYMBOLS)}, ensure_ascii=False))

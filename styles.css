@@ -193,6 +193,46 @@ main { width: min(1420px, calc(100% - 40px)); margin: 0 auto; }
 .sector-state b { padding: 4px 7px; border-radius: 7px; color: var(--blue-deep); background: #edf5ff; font-size: 9px; }
 .sector-state span { color: #647a92; font-size: 9px; }
 .sector-pulse-card p { margin: 9px 0 0; color: #8b9caf; font-size: 9px; line-height: 1.55; }
+.tomorrow-decision {
+  display: grid; grid-template-columns: 290px 1fr; gap: 12px;
+  margin-top: 13px; padding: 12px; border: 1px solid var(--line); border-radius: 18px;
+  background: linear-gradient(135deg, #f4f9ff, #fff);
+}
+.tomorrow-verdict {
+  position: relative; padding: 18px; border-radius: 15px; color: #fff;
+  background: linear-gradient(135deg, #13385f, #1f7895);
+}
+.tomorrow-verdict > span { color: #92dcd1; font-size: 9px; font-weight: 700; letter-spacing: .1em; }
+.tomorrow-verdict h3 { margin: 8px 0; font-size: 25px; }
+.tomorrow-verdict p { margin: 0; padding-right: 65px; color: #cae2ed; font-size: 10px; line-height: 1.7; }
+.tomorrow-probability {
+  position: absolute; top: 17px; right: 16px; width: 60px; height: 60px; display: grid;
+  place-content: center; border-radius: 50%; text-align: center;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+}
+.tomorrow-probability strong { font-size: 17px; }
+.tomorrow-probability span { color: #b6d7e5; font-size: 7px; }
+.tomorrow-levels {
+  display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 8px;
+}
+.tomorrow-levels div { padding: 12px; border-radius: 12px; background: #fff; border: 1px solid #e9f0f7; }
+.tomorrow-levels div:nth-child(4), .tomorrow-levels div:nth-child(5) { grid-column: span 3; }
+.tomorrow-levels span { display: block; color: var(--muted); font-size: 8px; }
+.tomorrow-levels strong { display: block; margin-top: 5px; color: var(--ink-2); font-size: 12px; line-height: 1.55; }
+.tomorrow-scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-top: 10px; }
+.tomorrow-scenario {
+  padding: 15px; border-radius: 15px; border: 1px solid #e4edf7;
+  background: #fbfdff; position: relative;
+}
+.tomorrow-scenario::before { content: ""; position: absolute; left: 0; top: 14px; bottom: 14px; width: 3px; border-radius: 3px; background: var(--blue); }
+.tomorrow-scenario.up::before { background: var(--red); }
+.tomorrow-scenario.down::before { background: var(--teal); }
+.tomorrow-scenario-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; color: #7489a0; font-size: 8px; }
+.tomorrow-scenario-head span { letter-spacing: .08em; font-weight: 700; }
+.tomorrow-scenario-head b { font-size: 15px; color: var(--ink); }
+.tomorrow-scenario h3 { margin: 9px 0 6px; font-size: 16px; }
+.tomorrow-scenario p { min-height: 48px; margin: 0; color: var(--muted); font-size: 9px; line-height: 1.65; }
+.tomorrow-scenario small { display: block; margin-top: 10px; padding-top: 9px; border-top: 1px solid #edf2f8; color: #60758c; font-size: 9px; line-height: 1.5; }
 .forecast-timeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 9px; margin-top: 13px; }
 .forecast-day {
   padding: 14px; border: 1px solid #e4edf7; border-radius: 16px;
@@ -545,6 +585,7 @@ dialog code { color: var(--blue); background: #edf4ff; padding: 2px 5px; border-
   .site-header { grid-template-columns: 1fr auto; }
   .top-nav { display: none; }
   .market-summary-grid, .sector-pulse-grid { grid-template-columns: repeat(2, 1fr); }
+  .tomorrow-decision { grid-template-columns: 1fr; }
   .forecast-timeline { display: flex; overflow-x: auto; padding-bottom: 5px; }
   .forecast-day { flex: 0 0 210px; }
   .dashboard { grid-template-columns: 1fr; }
@@ -577,6 +618,9 @@ dialog code { color: var(--blue); background: #edf4ff; padding: 2px 5px; border-
   .market-summary-grid { grid-template-columns: 1fr; }
   .market-read { grid-template-columns: 1fr; gap: 8px; }
   .sector-pulse-grid { grid-template-columns: 1fr 1fr; }
+  .tomorrow-levels { grid-template-columns: 1fr 1fr; }
+  .tomorrow-levels div:nth-child(4), .tomorrow-levels div:nth-child(5) { grid-column: span 2; }
+  .tomorrow-scenario-grid { grid-template-columns: 1fr; }
   .command-subhead > div { align-items: flex-start; }
   .command-subhead > .pill { display: none; }
   .stock-switcher { align-items: stretch; flex-wrap: wrap; padding: 10px; }
