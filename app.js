@@ -2299,6 +2299,24 @@ let marketNews = [
   ["市场继续关注AI资本开支、科技公司财报与能源价格对通胀预期的二次冲击。", "风险观察 · 今日"]
 ];
 
+let globalIntelligence = {
+  generatedAt: "等待自动快照",
+  riskScore: 0,
+  riskLevel: "等待更新",
+  summary: "正在收集全球宏观经济、地缘政治、产业监管和公司财报信息。",
+  marketView: "数据更新后，系统会分析事件向利率、汇率、商品和权益市场的传导路径。",
+  events: []
+};
+
+const intelGlossary = [
+  ["风险偏好", "投资者愿不愿意承担风险。风险偏好上升时，资金更愿意买股票；下降时更偏向现金、黄金和美债。"],
+  ["地缘风险溢价", "战争、制裁或航运中断让市场提前要求更高回报，通常会推高油价、金价和运费。"],
+  ["鹰派 / 鸽派", "鹰派更倾向于加息、控制通胀；鸽派更倾向于降息、支持经济。"],
+  ["供应链", "原材料、零件到成品的生产运输链条。链条受阻会推高成本并压缩企业利润。"],
+  ["美债收益率", "持有美国国债的回报率。快速上升会压低高估值科技股的吸引力。"],
+  ["风险资产", "价格波动较大的资产，例如股票、高收益债和商品；常见避险资产包括黄金和美债。"]
+];
+
 let marketSummaryCards = [
   {
     region: "A股",
@@ -2494,6 +2512,66 @@ function renderGlobalReport() {
   `).join("");
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function renderGlobalIntelligence() {
+  const intelligence = globalIntelligence;
+  $("intelUpdateTime").textContent = intelligence.generatedAt
+    ? `自动整理：${intelligence.generatedAt} · 共 ${intelligence.events.length} 条重点事件`
+    : "正在收集今日公开财经信息与地缘事件。";
+  $("intelRiskScore").textContent = intelligence.riskScore ? `${intelligence.riskScore}` : "—";
+  $("intelRiskLevel").textContent = intelligence.riskLevel || "等待更新";
+  $("intelRiskScore").style.setProperty("--risk", intelligence.riskScore || 0);
+  $("intelSummary").innerHTML = `
+    <div><span>今日全球风险判断</span><strong>${escapeHtml(intelligence.riskLevel)}</strong></div>
+    <p>${escapeHtml(intelligence.summary)}</p>
+    <small>${escapeHtml(intelligence.marketView)}</small>
+  `;
+
+  if (!intelligence.events.length) {
+    $("globalIntelGrid").innerHTML = `<div class="intel-empty">等待下一次自动快照更新。</div>`;
+  } else {
+    $("globalIntelGrid").innerHTML = intelligence.events.map((event) => {
+      const safeUrl = /^https?:\/\//i.test(event.url || "") ? event.url : "#";
+      const direction = event.direction || "中性";
+      const directionClass = direction.includes("利多") && !direction.includes("利空")
+        ? "bullish"
+        : direction.includes("利空") && !direction.includes("利多")
+          ? "bearish"
+          : "mixed";
+      return `
+        <article class="intel-card ${directionClass}">
+          <div class="intel-card-top">
+            <span>${escapeHtml(event.theme)}</span>
+            <b>${escapeHtml(direction)}</b>
+          </div>
+          <div class="intel-meta">${escapeHtml(event.region)} · ${escapeHtml(event.source)} · ${escapeHtml(event.publishedAt)}</div>
+          <h3>${escapeHtml(event.titleZh || event.title)}</h3>
+          ${event.titleZh ? `<p class="intel-original">${escapeHtml(event.title)}</p>` : ""}
+          <p class="intel-impact">${escapeHtml(event.impact)}</p>
+          <div class="intel-assets">
+            ${(event.beneficiaries || []).map((item) => `<span class="benefit">${escapeHtml(item)}</span>`).join("")}
+            ${(event.risks || []).map((item) => `<span class="risk">${escapeHtml(item)}</span>`).join("")}
+          </div>
+          <div class="intel-judgement"><span>短线判断</span><strong>${escapeHtml(event.judgement)}</strong></div>
+          <a href="${safeUrl}" target="_blank" rel="noopener noreferrer">查看原始来源 ↗</a>
+        </article>
+      `;
+    }).join("");
+  }
+
+  $("intelGlossary").innerHTML = intelGlossary.map(([term, explanation]) => `
+    <article><strong>${escapeHtml(term)}</strong><p>${escapeHtml(explanation)}</p></article>
+  `).join("");
+}
+
 function renderMarketCommand() {
   $("marketSummaryGrid").innerHTML = marketSummaryCards.map((card) => `
     <article class="market-summary-card">
@@ -2601,6 +2679,7 @@ function applyPublishedSnapshot(snapshot) {
   if (Array.isArray(snapshot.marketSummaryCards)) marketSummaryCards = snapshot.marketSummaryCards;
   if (Array.isArray(snapshot.sectorPulseDefinitions)) sectorPulseDefinitions = snapshot.sectorPulseDefinitions;
   if (snapshot.tomorrowAnalysis) tomorrowAnalysis = snapshot.tomorrowAnalysis;
+  if (snapshot.globalIntelligence) globalIntelligence = snapshot.globalIntelligence;
 
   if (snapshot.marketRead?.title) $("marketReadTitle").textContent = snapshot.marketRead.title;
   if (snapshot.marketRead?.text) $("marketReadText").textContent = snapshot.marketRead.text;
@@ -2613,6 +2692,7 @@ function applyPublishedSnapshot(snapshot) {
 
   renderTabs();
   renderGlobalReport();
+  renderGlobalIntelligence();
   renderMarketCommand();
   render();
   return true;
@@ -3005,6 +3085,7 @@ $("toggleGlossary").addEventListener("click", () => {
 
 renderTabs();
 renderGlobalReport();
+renderGlobalIntelligence();
 renderMarketCommand();
 render();
 renderGlossary();

@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 import concurrent.futures
+import html
 import json
+import re
 import statistics
+import urllib.parse
 import urllib.request
+import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta
+from email.utils import parsedate_to_datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -24,6 +29,12 @@ A_SYMBOLS = ["sh000001", "sz399001", "sz399006", "sh000688"]
 HK_SYMBOLS = ["hkHSI", "hkHSTECH"]
 US_SYMBOLS = ["usDJI", "usINX", "usIXIC"]
 COMMODITY_SYMBOLS = ["hf_CL", "hf_OIL", "hf_GC", "hf_HG"]
+NEWS_FEEDS = [
+    ("MarketWatch", "https://feeds.content.dowjones.io/public/rss/mw_topstories"),
+    ("美联储", "https://www.federalreserve.gov/feeds/press_all.xml"),
+    ("欧洲央行", "https://www.ecb.europa.eu/rss/press.html"),
+    ("联合国新闻", "https://news.un.org/feed/subscribe/en/news/all/rss.xml"),
+]
 
 
 def fetch(url, attempts=3):
@@ -468,6 +479,316 @@ def build_tomorrow_analysis(quotes, index_histories, stock_updates, commodities)
     }
 
 
+def clean_text(value):
+    return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", value or ""))).strip()
+
+
+def parse_feed_date(value):
+    try:
+        parsed = parsedate_to_datetime(value)
+        return parsed.astimezone(BEIJING)
+    except Exception:
+        return None
+
+
+def fetch_rss_feed(source, url):
+    try:
+        root = ET.fromstring(fetch(url, attempts=2))
+    except Exception:
+        return []
+    items = []
+    for node in root.findall(".//item"):
+        published = parse_feed_date(node.findtext("pubDate"))
+        if not published:
+            continue
+        items.append(
+            {
+                "source": source,
+                "title": clean_text(node.findtext("title")),
+                "summary": clean_text(node.findtext("description"))[:500],
+                "url": (node.findtext("link") or "").strip(),
+                "published": published,
+            }
+        )
+    return items
+
+
+def fetch_eastmoney_news(query):
+    parameters = {
+        "uid": "",
+        "keyword": query,
+        "type": ["cmsArticleWebOld"],
+        "client": "web",
+        "clientType": "web",
+        "clientVersion": "curr",
+        "param": {
+            "cmsArticleWebOld": {
+                "searchScope": "default",
+                "sort": "time",
+                "pageIndex": 1,
+                "pageSize": 12,
+                "preTag": "",
+                "postTag": "",
+            }
+        },
+    }
+    url = (
+        "https://search-api-web.eastmoney.com/search/jsonp?cb=jQuery&param="
+        + urllib.parse.quote(json.dumps(parameters, ensure_ascii=False, separators=(",", ":")))
+    )
+    try:
+        raw = fetch(url, attempts=1).decode("utf-8", errors="replace")
+        match = re.match(r"^jQuery\((.*)\)\s*$", raw, re.S)
+        payload = json.loads(match.group(1))
+    except Exception:
+        return []
+    items = []
+    for entry in payload.get("result", {}).get("cmsArticleWebOld", []):
+        try:
+            published = datetime.strptime(entry["date"], "%Y-%m-%d %H:%M:%S").replace(tzinfo=BEIJING)
+        except Exception:
+            continue
+        items.append(
+            {
+                "source": "东方财富",
+                "title": clean_text(entry.get("title")),
+                "summary": clean_text(entry.get("content"))[:500],
+                "url": entry.get("url", ""),
+                "published": published,
+            }
+        )
+    return items
+
+
+def classify_news(item):
+    title = item["title"].lower()
+    text = f"{title} {item['summary']}".lower()
+    geopolitical_words = [
+        "conflict", "security vacuum", "military", "missile", "drone",
+        "sanction", "gaza", "rafah", "lebanon", "sudan", "sahara",
+        "战争", "冲突", "制裁", "地缘", "军事", "袭击",
+    ]
+    if any(word in title for word in geopolitical_words):
+        return "地缘政治"
+    if any(word in title for word in ["oil", "fuel price", "opec", "shipping", "原油", "油价", "成品油", "航运"]):
+        return "能源与通胀"
+    if item["source"] in ("美联储", "欧洲央行") or any(
+        word in title for word in ["federal reserve", "ecb", "central bank", "interest rate", "inflation", "wage growth", "利率", "通胀", "央行"]
+    ):
+        return "货币政策"
+    if any(word in title for word in ["semiconductor", "chip", "qualcomm", "artificial intelligence", "figma", "data center", "芯片", "半导体", "人工智能"]):
+        return "科技产业链"
+    if any(word in title for word in ["midterm", "election", "congress", "选举", "中期选举"]):
+        return "全球市场"
+    if any(word in title for word in ["earnings", "profit", "revenue", "sales", "results", "财报", "净利润", "营收"]):
+        return "财报与公司"
+    return "全球市场"
+
+
+def translate_headline(title):
+    text = title.lower()
+    translations = [
+        (("democrats", "congress"), "美国中期选举结果推动风险资产出现缓解性反弹"),
+        (("qualcomm",), "高通财报后股价承压，手机芯片业务仍是主要拖累"),
+        (("figma", "ai momentum"), "Figma因AI投入成本与估值压力回落"),
+        (("security vacuum", "peacekeeping"), "联合国警告维和力量撤离可能形成安全真空"),
+        (("rafah", "gaza"), "加沙拉法流离失所营地局势紧张，冬季援助压力上升"),
+        (("fuel price shock",), "联合国警告燃油价格冲击对发展中经济体影响更大"),
+        (("wage growth",), "欧洲央行工资指标显示未来工资增速略高"),
+        (("fomc",), "美联储发布最新FOMC货币政策信息"),
+        (("monetary policy decisions",), "欧洲央行公布最新货币政策决定"),
+        (("worst-performing", "s&p 500"), "今年表现最差的标普500成分股出现反弹"),
+        (("vistra", "energy stocks"), "Vistra等能源股回落，分析师提醒警惕过度反应"),
+    ]
+    for keywords, translation in translations:
+        if all(keyword in text for keyword in keywords):
+            return translation
+    return None
+
+
+def news_impact(theme, item):
+    text = f"{item['title']} {item['summary']}".lower()
+    if theme == "地缘政治":
+        return {
+            "direction": "偏利空风险资产",
+            "impact": "地缘冲突或安全真空会先抬高原油、黄金和航运的风险溢价；若持续升级，通胀预期可能上升，并压制高估值成长股。",
+            "beneficiaries": ["原油", "黄金", "军工", "油运"],
+            "risks": ["航空", "化工下游", "高估值成长"],
+            "judgement": "短线偏防守；关注冲突是否扩大到能源运输通道。",
+        }
+    if theme == "能源与通胀":
+        return {
+            "direction": "分化",
+            "impact": "能源价格上升会提高运输和制造企业成本，同时利好油气开采、煤炭和油运；若油价持续高企，央行降息空间会被压缩。",
+            "beneficiaries": ["油气开采", "煤炭", "油运"],
+            "risks": ["航空", "化工", "可选消费"],
+            "judgement": "油价方向是后续通胀和利率预期的关键变量。",
+        }
+    if theme == "货币政策":
+        tightening = any(word in text for word in ["wage growth", "inflation", "hike", "加息", "通胀", "higher"])
+        if tightening:
+            impact = "工资和通胀更有黏性，会削弱快速降息预期并推高长端利率；利率上升通常利空高估值科技股，但利好银行净息差。"
+            direction = "偏利空债券和高估值股"
+            judgement = "重点看美债收益率和美元指数是否同步上行。"
+        else:
+            impact = "央行政策沟通会改变市场对利率路径的预期；偏鸽通常利多成长股和黄金，偏鹰则相反，需要结合正式声明判断。"
+            direction = "待观察"
+            judgement = "先看政策声明中的利率措辞、通胀判断和反对票数量。"
+        return {
+            "direction": direction,
+            "impact": impact,
+            "beneficiaries": ["银行", "价值股", "短债"],
+            "risks": ["高估值科技", "房地产", "长久期债券"],
+            "judgement": judgement,
+        }
+    if theme == "科技产业链":
+        negative = any(word in text for word in ["falls", "dips", "pressure", "slow", "worry", "下滑", "承压", "担忧"])
+        return {
+            "direction": "偏利空科技板块" if negative else "分化",
+            "impact": "芯片和AI公司更受订单、资本开支与估值影响；财报或行业需求不及预期时，半导体、服务器和光模块容易同步调整。",
+            "beneficiaries": ["国产替代", "低成本算力"],
+            "risks": ["半导体", "光模块", "高估值软件"],
+            "judgement": "关注业绩指引能否覆盖当前高估值。",
+        }
+    if theme == "财报与公司":
+        negative = any(word in text for word in ["falls", "pressure", "miss", "cut", "下滑", "承压", "减持"])
+        return {
+            "direction": "偏利空个股" if negative else "局部利多",
+            "impact": "财报会改变市场对行业订单和盈利增速的判断，影响通常先集中在公司及直接供应链，再扩散到同行业估值。",
+            "beneficiaries": ["业绩超预期公司", "上游设备"],
+            "risks": ["指引下修公司", "高库存产业链"],
+            "judgement": "不只看同比利润，还要看下一季度指引和现金流。",
+        }
+    positive = any(word in text for word in ["rally", "best day", "gain", "rise", "surge", "relief", "上涨", "反弹", "新高"])
+    return {
+        "direction": "偏利多风险资产" if positive else "分化",
+        "impact": "风险偏好改善有利于股票和高收益债；但若上涨主要来自政策预期，仍需后续经济数据和企业盈利确认。",
+        "beneficiaries": ["权益市场", "周期股", "高收益债"],
+        "risks": ["黄金", "美债", "防御板块"],
+        "judgement": "短线偏强，但持续性取决于成交量和盈利预期。",
+    }
+
+
+def build_global_intelligence(now, commodities):
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+        feed_results = list(executor.map(lambda feed: fetch_rss_feed(*feed), NEWS_FEEDS))
+    items = [item for group in feed_results for item in group]
+    items.extend(fetch_eastmoney_news("A股 焦点复盘"))
+
+    cutoff = now - timedelta(days=8)
+    filtered = []
+    for item in items:
+        if item["published"] < cutoff or not item["title"] or not item["url"]:
+            continue
+        title_lower = item["title"].lower()
+        if item["source"] == "MarketWatch" and any(
+            phrase in title_lower for phrase in [
+                "i’m", "my life", "my husband", "roth conversion", "custom porsche",
+                "most investors", "how to", "here is the five-part", "how do americans",
+            ]
+        ):
+            continue
+        if item["source"] == "美联储" and not any(
+            word in title_lower for word in ["fomc", "monetary", "interest", "inflation", "rate", "supervision"]
+        ):
+            continue
+        if item["source"] == "欧洲央行" and not any(
+            word in title_lower for word in ["wage", "monetary policy", "interest rate", "inflation", "rate cut", "rate hike"]
+        ):
+            continue
+        if item["source"] == "联合国新闻" and not any(
+            word in title_lower for word in ["war", "security", "gaza", "rafah", "lebanon", "sudan", "fuel", "climate", "sanction"]
+        ):
+            continue
+        if item["source"] == "东方财富" and not any(word in item["title"] for word in ["复盘", "收盘"]):
+            continue
+        item["theme"] = classify_news(item)
+        item["titleZh"] = translate_headline(item["title"])
+        item.update(news_impact(item["theme"], item))
+        item["publishedAt"] = item.pop("published").strftime("%m-%d %H:%M")
+        title_only = item["title"].lower()
+        item["region"] = (
+            "中东" if any(word in title_only for word in ["gaza", "rafah", "lebanon", "iran"])
+            else "非洲" if any(word in title_only for word in ["sudan", "sahara"])
+            else "美国" if item["source"] == "美联储" or "congress" in item["title"].lower()
+            else "欧洲" if item["source"] == "欧洲央行"
+            else "中国" if item["source"] == "东方财富" and any(word in item["title"] for word in ["A股", "人民币", "中国"])
+            else "全球"
+        )
+        filtered.append(item)
+
+    filtered.sort(key=lambda item: item["publishedAt"], reverse=True)
+    selected = []
+    seen_titles = set()
+    theme_limits = [
+        ("地缘政治", 2),
+        ("货币政策", 2),
+        ("能源与通胀", 1),
+        ("全球市场", 1),
+        ("科技产业链", 1),
+        ("财报与公司", 1),
+    ]
+    for preferred_theme, limit in theme_limits:
+        candidates = [item for item in filtered if item["theme"] == preferred_theme]
+        if preferred_theme == "货币政策":
+            candidates.sort(
+                key=lambda item: (
+                    sum(
+                        weight
+                        for keyword, weight in (
+                            ("wage growth", 5),
+                            ("inflation", 4),
+                            ("fomc", 5),
+                            ("rate decision", 4),
+                            ("monetary policy decisions", 5),
+                        )
+                        if keyword in item["title"].lower()
+                    ),
+                    item["publishedAt"],
+                ),
+                reverse=True,
+            )
+        for item in candidates:
+            if sum(1 for selected_item in selected if selected_item["theme"] == preferred_theme) >= limit:
+                break
+            if item["theme"] == preferred_theme and item["title"] not in seen_titles:
+                selected.append(item)
+                seen_titles.add(item["title"])
+    for item in filtered:
+        if len(selected) >= 7:
+            break
+        if item["title"] not in seen_titles:
+            selected.append(item)
+            seen_titles.add(item["title"])
+
+    geopolitical_count = sum(1 for item in selected if item["theme"] == "地缘政治")
+    negative_count = sum(1 for item in selected if "利空" in item["direction"])
+    positive_count = sum(1 for item in selected if "利多" in item["direction"])
+    risk_score = int(clamp(
+        34 + geopolitical_count * 8 + negative_count * 3 - positive_count * 3
+        + (5 if commodities["hf_CL"]["pct"] > 2 else 0),
+        20,
+        72,
+    ))
+    risk_level = "低" if risk_score < 35 else "中等" if risk_score < 55 else "中高" if risk_score < 72 else "高"
+    lead_themes = "、".join(dict.fromkeys(item["theme"] for item in selected[:4]))
+    return {
+        "generatedAt": now.strftime("%Y-%m-%d %H:%M"),
+        "riskScore": risk_score,
+        "riskLevel": risk_level,
+        "summary": f"今日信息主要集中在{lead_themes or '全球宏观'}。地缘与能源事件主要通过油价、通胀和利率预期影响股市。",
+        "marketView": (
+            f"WTI原油 {commodities['hf_CL']['pct']:+.2f}%，COMEX黄金 {commodities['hf_GC']['pct']:+.2f}%。"
+            + (
+                "黄金走强但油价没有同步上涨，当前更像避险需求和利率预期驱动，权益市场可能轮动而非全面下跌。"
+                if commodities["hf_GC"]["pct"] > 0.5 and commodities["hf_CL"]["pct"] <= 0.5
+                else "能源和避险资产若继续同步走强，权益市场短线更可能承压；反之成长板块弹性更大。"
+            )
+        ),
+        "events": selected,
+    }
+
+
 def build_market_summary(quotes, commodities):
     def metric(symbol):
         quote = quotes[symbol]
@@ -544,6 +865,16 @@ def main():
     a_average = statistics.mean([quotes[symbol]["pct"] for symbol in A_SYMBOLS])
     breadth_positive = sum(1 for item in stock_updates if item["changePct"] > 0)
     tomorrow_analysis = build_tomorrow_analysis(quotes, index_histories, stock_updates, commodities)
+    try:
+        global_intelligence = build_global_intelligence(now, commodities)
+    except Exception:
+        global_intelligence = {"events": []}
+    if not global_intelligence.get("events"):
+        try:
+            previous_snapshot = json.loads((ROOT / "latest.json").read_text())
+            global_intelligence = previous_snapshot.get("globalIntelligence", global_intelligence)
+        except Exception:
+            pass
     ranked_stocks = sorted(stock_updates, key=lambda item: item["_analysis"]["score"], reverse=True)
     sector_pulse = [
         {
@@ -594,6 +925,7 @@ def main():
         "marketNews": market_news,
         "sectorPulseDefinitions": sector_pulse,
         "tomorrowAnalysis": tomorrow_analysis,
+        "globalIntelligence": global_intelligence,
     }
 
     snapshot_path = ROOT / "latest.json"
@@ -614,6 +946,28 @@ def main():
     for card in snapshot["marketSummaryCards"]:
         metrics = "；".join(f"{name} {value}（{pct:+.2f}%）" for name, value, pct in card["metrics"])
         report_lines.extend([f"### {card['region']} · {card['title']}", "", f"{metrics}。", "", card["note"], ""])
+    report_lines.extend(
+        [
+            "## 全球财经与地缘风险",
+            "",
+            f"**风险温度：{global_intelligence.get('riskScore', '—')}/100（{global_intelligence.get('riskLevel', '待更新')}）**",
+            "",
+            global_intelligence.get("summary", "暂无可用信息。"),
+            "",
+        ]
+    )
+    for event in global_intelligence.get("events", [])[:7]:
+        report_lines.extend(
+            [
+                f"### {event.get('titleZh') or event.get('title')}",
+                "",
+                f"- 来源：{event.get('source')} · {event.get('publishedAt')}",
+                f"- 判断：{event.get('direction')}",
+                f"- 影响路径：{event.get('impact')}",
+                f"- 短线观察：{event.get('judgement')}",
+                "",
+            ]
+        )
     report_lines.extend(
         [
             f"## 明日分析 · {tomorrow_analysis['dateLabel']}",

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="全球股市日报与A股个股收盘复盘，包含8只股票、次日开盘情景和术语白话解释。">
+  <meta name="description" content="全球股市日报、财经与地缘风险、A股个股复盘、明日情景和术语白话解释。">
   <meta name="theme-color" content="#2f70e8">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -12,7 +12,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./icons/icon-180.png">
-  <link rel="stylesheet" href="./styles.css?v=20261025-tomorrow-v1">
+  <link rel="stylesheet" href="./styles.css?v=20261105-intel-v1">
 </head>
 <body>
   <div class="ambient ambient-one"></div>
@@ -36,6 +36,7 @@
       <a href="#review">个股复盘</a>
       <a href="#outlook">明日开盘</a>
       <a href="#fundamentals">基本面</a>
+      <a href="#global-intel">全球情报</a>
       <a href="#daily">全球日报</a>
       <a href="#glossary">术语解释</a>
     </nav>
@@ -112,6 +113,31 @@
         <span>④ 美债收益率和人民币波动</span>
       </div>
       <p class="forecast-disclaimer">以上为根据最近收盘、均线、相对强弱、商品价格与跨市场风险生成的下一交易日条件推演；概率和区间不保证兑现。</p>
+    </section>
+
+    <section class="global-intel card" id="global-intel">
+      <div class="intel-head">
+        <div>
+          <p class="eyebrow">GLOBAL INTELLIGENCE · DAILY</p>
+          <h2>全球财经与地缘风险雷达</h2>
+          <p id="intelUpdateTime">正在收集今日公开财经信息与地缘事件。</p>
+        </div>
+        <div class="intel-risk">
+          <span>风险温度</span>
+          <strong id="intelRiskScore">—</strong>
+          <small id="intelRiskLevel">等待更新</small>
+        </div>
+      </div>
+      <div class="intel-summary" id="intelSummary"></div>
+      <div class="intel-grid" id="globalIntelGrid"></div>
+      <div class="intel-glossary">
+        <div>
+          <p class="eyebrow">PLAIN LANGUAGE</p>
+          <h3>专业术语白话解释</h3>
+        </div>
+        <div class="intel-term-grid" id="intelGlossary"></div>
+      </div>
+      <p class="intel-source-note">新闻标题和链接来自公开来源；影响判断为规则模型分析，不构成投资建议。遇到重大事件应以官方公告和权威媒体更新为准。</p>
     </section>
 
     <section class="stock-switcher" aria-label="股票池">
@@ -370,6 +396,6 @@
     <button class="primary-button" id="ackInstallModal" type="button">知道了</button>
   </dialog>
 
-  <script src="./app.js?v=20261025-tomorrow-v1"></script>
+  <script src="./app.js?v=20261105-intel-v1"></script>
 </body>
 </html>
