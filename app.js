@@ -1,3 +1,6 @@
+let snapshotMetaDate = "";
+let snapshotDateLabel = "最近有效";
+
 const stocks = [
   {
     id: "601168",
@@ -2305,7 +2308,8 @@ let globalIntelligence = {
   riskLevel: "等待更新",
   summary: "正在收集全球宏观经济、地缘政治、产业监管和公司财报信息。",
   marketView: "数据更新后，系统会分析事件向利率、汇率、商品和权益市场的传导路径。",
-  events: []
+  events: [],
+  officialUpdates: []
 };
 
 const intelGlossary = [
@@ -2567,6 +2571,22 @@ function renderGlobalIntelligence() {
     }).join("");
   }
 
+  if (!intelligence.officialUpdates?.length) {
+    $("officialUpdateGrid").innerHTML = `<div class="intel-empty">官方信息暂未更新。</div>`;
+  } else {
+    $("officialUpdateGrid").innerHTML = intelligence.officialUpdates.map((item) => {
+      const safeUrl = /^https?:\/\//i.test(item.url || "") ? item.url : "#";
+      return `
+        <article class="official-update-card">
+          <div class="official-update-meta"><span>${escapeHtml(item.sourceType || "官方")} · ${escapeHtml(item.source)}</span><time>${escapeHtml(item.publishedAt)}</time></div>
+          <a href="${safeUrl}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.title)}</a>
+          <p class="official-update-impact">${escapeHtml(item.impact || "查看原始来源，结合政策细节判断影响。")}</p>
+          <small>${escapeHtml(item.theme)} · ${escapeHtml(item.direction)}</small>
+        </article>
+      `;
+    }).join("");
+  }
+
   $("intelGlossary").innerHTML = intelGlossary.map(([term, explanation]) => `
     <article><strong>${escapeHtml(term)}</strong><p>${escapeHtml(explanation)}</p></article>
   `).join("");
@@ -2637,6 +2657,21 @@ function renderMarketCommand() {
 
 function applyPublishedSnapshot(snapshot) {
   if (!snapshot || snapshot.version !== 1) return false;
+
+  const snapshotDate = /^\d{4}-\d{2}-\d{2}/.test(snapshot.generatedAt || "")
+    ? snapshot.generatedAt.slice(0, 10)
+    : "";
+  if (snapshotDate) {
+    const [year, month, day] = snapshotDate.split("-").map(Number);
+    const weekdays = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+    const weekday = weekdays[new Date(`${snapshotDate}T12:00:00+08:00`).getDay()];
+    snapshotMetaDate = snapshotDate;
+    snapshotDateLabel = `${month}/${day}`;
+    $("headerSnapshotLabel").textContent = `${month}月${day}日收盘数据`;
+    $("workspaceDate").textContent = `${year}.${String(month).padStart(2, "0")}.${String(day).padStart(2, "0")}`;
+    $("workspaceWeekday").textContent = weekday;
+    $("footerUpdateLabel").textContent = `数据更新：${snapshot.generatedAt} · 最近有效快照`;
+  }
 
   liveMarketGroups.forEach((group) => {
     const update = snapshot.marketGroups?.find((item) => item.title === group.title);
@@ -2952,7 +2987,7 @@ function render() {
   $("volatilityLevel").textContent = stock.volatilityLevel;
   $("volatilityBar").style.width = `${stock.volatilityWidth}%`;
   $("volatilityText").textContent = stock.volatilityText;
-  $("scenarioTimestamp").textContent = `按 10/23 收盘数据推演 · ${stock.name}`;
+  $("scenarioTimestamp").textContent = `按 ${snapshotDateLabel} 收盘数据推演 · ${stock.name}`;
 
   $("scenarioList").innerHTML = stock.scenarios.map((scenario) => `
     <div class="mini-scenario">
@@ -2990,14 +3025,14 @@ function render() {
   $("fundamentalGrid").innerHTML = stock.fundamentals.map(([label, value, note]) => `
     <div class="fundamental-item"><span>${label}</span><strong>${value}</strong><small>${note}</small></div>
   `).join("");
-  $("fundamentalNote").textContent = stock.fundamentalNote;
+  $("fundamentalNote").textContent = stock.fundamentalNote.replace("2026-10-23", snapshotMetaDate || "最近有效");
   $("thesis").textContent = stock.thesis;
   $("positiveFactors").innerHTML = stock.positiveFactors.map((factor) => `<li>${factor}</li>`).join("");
   $("riskFactors").innerHTML = stock.riskFactors.map((factor) => `<li>${factor}</li>`).join("");
 
   $("historyRows").innerHTML = `
     <tr>
-      <td>2026-10-23</td>
+      <td>${snapshotMetaDate || "待更新"}</td>
       <td><strong>${stock.name}</strong> ${stock.id}</td>
       <td>${stock.history.bias}</td>
       <td>${stock.history.volatility}</td>

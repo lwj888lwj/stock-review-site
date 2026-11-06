@@ -12,7 +12,7 @@
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./icons/icon-180.png">
-  <link rel="stylesheet" href="./styles.css?v=20261105-intel-v1">
+  <link rel="stylesheet" href="./styles.css?v=20261105-official-v4">
 </head>
 <body>
   <div class="ambient ambient-one"></div>
@@ -44,7 +44,7 @@
     <div class="header-actions">
       <div class="header-status">
         <span class="status-dot" aria-hidden="true"></span>
-        <span>10月23日收盘数据</span>
+        <span id="headerSnapshotLabel">正在同步最新数据</span>
       </div>
       <button class="install-app" id="installAppButton" type="button" hidden>安装 App</button>
     </div>
@@ -58,8 +58,8 @@
         <p class="workspace-subtitle">先总结最新大盘，再给出下一交易日的概率、关键区间和板块优先级，随后进入个股收盘复盘。分析均为条件情景，不构成确定性判断。</p>
       </div>
       <div class="workspace-meta">
-        <span>2026.10.23</span>
-        <strong>星期五</strong>
+        <span id="workspaceDate">----.--.--</span>
+        <strong id="workspaceWeekday">更新中</strong>
       </div>
     </section>
 
@@ -68,7 +68,7 @@
         <div>
           <p class="eyebrow">MARKET COMMAND CENTER</p>
           <h2>大盘总结与明日分析</h2>
-          <p id="marketSnapshotLabel">基准数据为 2026-10-23 最近收盘；分析对象为下一交易日。</p>
+          <p id="marketSnapshotLabel">正在同步最近有效快照；分析对象为下一交易日。</p>
         </div>
         <div class="command-badge">
           <span>规则模型</span>
@@ -130,6 +130,16 @@
       </div>
       <div class="intel-summary" id="intelSummary"></div>
       <div class="intel-grid" id="globalIntelGrid"></div>
+      <div class="official-updates">
+        <div class="official-updates-head">
+          <div>
+            <p class="eyebrow">OFFICIAL SOURCES</p>
+            <h3>官方信息更新</h3>
+          </div>
+          <span>政策与数据优先</span>
+        </div>
+        <div class="official-update-grid" id="officialUpdateGrid"></div>
+      </div>
       <div class="intel-glossary">
         <div>
           <p class="eyebrow">PLAIN LANGUAGE</p>
@@ -238,7 +248,7 @@
           <p class="eyebrow">OPENING PLAYBOOK</p>
           <h2>明日开盘情景图</h2>
         </div>
-        <span id="scenarioTimestamp">按 10/23 收盘数据推演</span>
+        <span id="scenarioTimestamp">正在同步收盘数据</span>
       </div>
       <div class="scenario-grid" id="scenarioGrid"></div>
     </section>
@@ -371,7 +381,7 @@
 
   <footer>
     <span>地平线 · Stock Insight</span>
-    <span>数据更新：2026-10-23 收盘</span>
+    <span id="footerUpdateLabel">数据更新：正在同步</span>
   </footer>
 
   <dialog id="extendDialog">
@@ -396,6 +406,6 @@
     <button class="primary-button" id="ackInstallModal" type="button">知道了</button>
   </dialog>
 
-  <script src="./app.js?v=20261105-intel-v1"></script>
+  <script src="./app.js?v=20261105-official-v4"></script>
 </body>
 </html>

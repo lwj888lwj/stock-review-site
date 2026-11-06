@@ -328,6 +328,17 @@ main { width: min(1420px, calc(100% - 40px)); margin: 0 auto; }
 .intel-judgement span { color: #99a9ba; font-size: 8px; }
 .intel-judgement strong { color: #395774; font-size: 9px; line-height: 1.55; }
 .intel-card > a { display: inline-block; margin-top: 9px; color: var(--blue); font-size: 8px; font-weight: 700; }
+.official-updates { margin-top: 20px; padding: 16px; border-radius: 16px; background: #f7fbfe; border: 1px solid #e5eef7; }
+.official-updates-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+.official-updates-head h3 { margin: 0; font-size: 16px; }
+.official-updates-head > span { color: #758aa0; font-size: 8px; }
+.official-update-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }
+.official-update-card { padding: 11px 12px; border-radius: 11px; background: #fff; border: 1px solid #e9f0f7; }
+.official-update-meta { display: flex; justify-content: space-between; gap: 8px; color: #8194a8; font-size: 8px; }
+.official-update-meta span { color: var(--blue); font-weight: 700; }
+.official-update-card > a { display: block; margin-top: 7px; color: #2a405a; font-size: 10px; font-weight: 700; line-height: 1.55; }
+.official-update-impact { margin: 6px 0 0; color: #61788f; font-size: 8px; line-height: 1.6; }
+.official-update-card > small { display: block; margin-top: 5px; color: #8a9bad; font-size: 8px; }
 .intel-glossary {
   display: grid; grid-template-columns: 180px 1fr; gap: 18px;
   margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line);
@@ -652,6 +663,7 @@ dialog code { color: var(--blue); background: #edf4ff; padding: 2px 5px; border-
   .market-summary-grid, .sector-pulse-grid { grid-template-columns: repeat(2, 1fr); }
   .tomorrow-decision { grid-template-columns: 1fr; }
   .intel-grid, .intel-term-grid { grid-template-columns: repeat(2, 1fr); }
+  .official-update-grid { grid-template-columns: 1fr; }
   .forecast-timeline { display: flex; overflow-x: auto; padding-bottom: 5px; }
   .forecast-day { flex: 0 0 210px; }
   .dashboard { grid-template-columns: 1fr; }

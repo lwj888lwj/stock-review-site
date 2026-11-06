@@ -4,6 +4,7 @@ import html
 import json
 import re
 import statistics
+import sys
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -560,6 +561,214 @@ def fetch_eastmoney_news(query):
     return items
 
 
+def fetch_pboc_news():
+    url = "http://www.pbc.gov.cn/goutongjiaoliu/113456/113469/index.html"
+    page = fetch(url, attempts=2).decode("utf-8", errors="replace")
+    pattern = re.compile(
+        r'<a href="(/goutongjiaoliu/113456/113469/\d{4,}/index\.html)"[^>]*\stitle="([^"]+)"[^>]*>.*?</a>.*?'
+        r'<span class="hui12">(\d{4}-\d{2}-\d{2})</span>',
+        re.S,
+    )
+    return [
+        {
+            "source": "中国人民银行",
+            "title": clean_text(title),
+            "url": urllib.parse.urljoin(url, link),
+            "published": datetime.strptime(published, "%Y-%m-%d").replace(tzinfo=BEIJING),
+            "summary": "",
+        }
+        for link, title, published in pattern.findall(page)
+    ]
+
+
+def fetch_nbs_news():
+    url = "https://www.stats.gov.cn/sj/zxfb/"
+    page = fetch(url, attempts=2).decode("utf-8", errors="replace")
+    pattern = re.compile(
+        r'<a class="fl pc_1600" href="([^"]+)"[^>]*title=[\'"]([^\'"]+)[\'"][^>]*>.*?</a>.*?'
+        r'<span>\s*(\d{4}-\d{2}-\d{2})\s*</span>',
+        re.S,
+    )
+    return [
+        {
+            "source": "国家统计局",
+            "title": clean_text(title),
+            "url": urllib.parse.urljoin(url, link),
+            "published": datetime.strptime(published, "%Y-%m-%d").replace(tzinfo=BEIJING),
+            "summary": "",
+        }
+        for link, title, published in pattern.findall(page)
+    ]
+
+
+def fetch_csrc_news():
+    url = "https://www.csrc.gov.cn/csrc/c100028/list.shtml"
+    page = fetch(url, attempts=2).decode("utf-8", errors="replace")
+    pattern = re.compile(
+        r'<a href="(/csrc/(?:c100028|c106311)/[^"]+/content\.shtml)"[^>]*>([^<]+)</a>'
+        r'\s*<span class="time">\s*(\d{2}-\d{2})\s*</span>',
+        re.S,
+    )
+    items = []
+    for link, title, month_day in pattern.findall(page):
+        try:
+            published = datetime.strptime(f"{datetime.now(BEIJING).year}-{month_day}", "%Y-%m-%d").replace(tzinfo=BEIJING)
+        except ValueError:
+            continue
+        if published > datetime.now(BEIJING) + timedelta(days=7):
+            published = published.replace(year=published.year - 1)
+        title = clean_text(title)
+        if len(title) < 6 or title in ("加载更多",):
+            continue
+        items.append(
+            {
+                "source": "中国证监会",
+                "title": title,
+                "url": urllib.parse.urljoin(url, link),
+                "published": published,
+                "summary": "",
+            }
+        )
+    return items
+
+
+def fetch_sse_news():
+    url = "https://www.sse.com.cn/aboutus/mediacenter/hotandd/"
+    page = fetch(url, attempts=2).decode("utf-8", errors="replace")
+    items = []
+    for block in re.findall(r"<dd>(.*?)</dd>", page, re.S):
+        date_match = re.search(r"(\d{4}-\d{2}-\d{2})", block)
+        link_match = re.search(r'<a href="([^"]+)" title="([^"]+)"', block)
+        if not date_match or not link_match:
+            continue
+        items.append(
+            {
+                "source": "上海证券交易所",
+                "title": clean_text(link_match.group(2)),
+                "url": urllib.parse.urljoin(url, link_match.group(1)),
+                "published": datetime.strptime(date_match.group(1), "%Y-%m-%d").replace(tzinfo=BEIJING),
+                "summary": "",
+            }
+        )
+    return items
+
+
+def fetch_szse_news():
+    url = "https://www.szse.cn/aboutus/trends/news/"
+    page = fetch(url, attempts=2).decode("utf-8", errors="replace")
+    pattern = re.compile(
+        r"var curHref = '([^']+)';.*?var curTitle ='([^']+)';.*?"
+        r'<span class="time">\s*(\d{4}-\d{2}-\d{2})\s*</span>',
+        re.S,
+    )
+    items = []
+    for link, title, published in pattern.findall(page):
+        items.append(
+            {
+                "source": "深圳证券交易所",
+                "title": clean_text(title),
+                "url": urllib.parse.urljoin(url, link),
+                "published": datetime.strptime(published, "%Y-%m-%d").replace(tzinfo=BEIJING),
+                "summary": "",
+            }
+        )
+    return items
+
+
+def fetch_opec_news():
+    queries = ("欧佩克", "OPEC")
+    with concurrent.futures.ThreadPoolExecutor(max_workers=len(queries)) as executor:
+        groups = list(executor.map(fetch_eastmoney_news, queries))
+    items = []
+    seen_urls = set()
+    for item in (entry for group in groups for entry in group):
+        if item["url"] in seen_urls:
+            continue
+        if not any(keyword in item["title"].upper() for keyword in ("OPEC", "欧佩克")):
+            continue
+        seen_urls.add(item["url"])
+        item["source"] = "OPEC动态（东方财富）"
+        items.append(item)
+    return items
+
+
+def build_official_updates(now):
+    loaders = [
+        fetch_pboc_news,
+        fetch_nbs_news,
+        fetch_csrc_news,
+        fetch_sse_news,
+        fetch_szse_news,
+        fetch_opec_news,
+    ]
+
+    def safe_loader(loader):
+        try:
+            return loader()
+        except Exception:
+            return []
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=len(loaders)) as executor:
+        results = list(executor.map(safe_loader, loaders))
+
+    eia_items = [
+        item
+        for item in fetch_rss_feed("美国能源信息署", "https://www.eia.gov/rss/todayinenergy.xml")
+        if item["published"] >= now - timedelta(days=21)
+    ]
+    results.append(eia_items)
+
+    def priority(item):
+        title = item["title"]
+        score = 0
+        if item["source"] == "中国人民银行":
+            score += sum(
+                3
+                for keyword in ("再贷款", "回购", "增持", "互换便利", "降准", "降息", "货币政策", "金融工作")
+                if keyword in title
+            )
+        elif item["source"] == "中国证监会":
+            score += sum(
+                2
+                for keyword in ("证监会", "上市公司", "发行", "交易", "监管", "处罚", "风险", "基金", "期货")
+                if keyword in title
+            )
+            score += sum(
+                4
+                for keyword in ("稳市场", "稳预期", "中长期资金", "资本市场")
+                if keyword in title
+            )
+        elif item["source"] == "美国能源信息署":
+            score += sum(
+                2
+                for keyword in ("oil", "gas", "energy", "electricity", "price")
+                if keyword in title.lower()
+            )
+        elif item["source"] == "OPEC动态（东方财富）":
+            score += 4 if any(keyword in title.upper() for keyword in ("OPEC", "欧佩克")) else 0
+        return score, item["published"]
+
+    official_updates = []
+    for items in results:
+        recent_items = [item for item in items if item["published"] >= now - timedelta(days=21)]
+        if not recent_items:
+            continue
+        latest = max(recent_items, key=priority)
+        latest["publishedAt"] = latest["published"].strftime("%m-%d")
+        latest["theme"] = "中国政策与市场" if latest["source"] in (
+            "中国人民银行", "国家统计局", "中国证监会", "上海证券交易所", "深圳证券交易所"
+        ) else "能源与通胀"
+        latest["sourceType"] = (
+            "官方" if latest["source"] in (
+                "中国人民银行", "国家统计局", "中国证监会", "上海证券交易所",
+                "深圳证券交易所", "美国能源信息署"
+            ) else "媒体聚合"
+        )
+        latest.update(news_impact(latest["theme"], latest))
+        official_updates.append(latest)
+    return official_updates
+
+
 def classify_news(item):
     title = item["title"].lower()
     text = f"{title} {item['summary']}".lower()
@@ -570,8 +779,12 @@ def classify_news(item):
     ]
     if any(word in title for word in geopolitical_words):
         return "地缘政治"
-    if any(word in title for word in ["oil", "fuel price", "opec", "shipping", "原油", "油价", "成品油", "航运"]):
+    if item["source"] in ("美国能源信息署", "OPEC动态（东方财富）") or any(
+        word in title for word in ["oil", "fuel price", "opec", "shipping", "原油", "油价", "成品油", "航运", "欧佩克"]
+    ):
         return "能源与通胀"
+    if item["source"] in ("中国人民银行", "国家统计局", "中国证监会", "上海证券交易所", "深圳证券交易所"):
+        return "中国政策与市场"
     if item["source"] in ("美联储", "欧洲央行") or any(
         word in title for word in ["federal reserve", "ecb", "central bank", "interest rate", "inflation", "wage growth", "利率", "通胀", "央行"]
     ):
@@ -641,6 +854,35 @@ def news_impact(theme, item):
             "risks": ["高估值科技", "房地产", "长久期债券"],
             "judgement": judgement,
         }
+    if theme == "中国政策与市场":
+        supportive = any(
+            word in text
+            for word in ["再贷款", "回购", "增持", "互换便利", "支持资本市场", "稳市", "降准", "降息", "增长"]
+        )
+        warning = any(word in text for word in ["处罚", "警示函", "立案", "风险", "违规", "下降"])
+        if supportive and not warning:
+            return {
+                "direction": "偏利多A股与港股",
+                "impact": "流动性支持或稳市场政策会改善风险偏好，通常利好券商、金融、成长和高股息资产；仍需观察成交额和政策落地规模。",
+                "beneficiaries": ["券商", "金融", "高股息", "成长"],
+                "risks": ["政策低于预期"],
+                "judgement": "短线偏利多，重点看政策覆盖范围与市场成交是否放大。",
+            }
+        if warning:
+            return {
+                "direction": "局部利空",
+                "impact": "监管处罚和风险提示通常先影响涉事公司或行业，严重时可能压低相关板块的风险偏好。",
+                "beneficiaries": ["合规龙头"],
+                "risks": ["涉事公司", "高杠杆行业"],
+                "judgement": "先核查是否涉及自选股及其供应链。",
+            }
+        return {
+            "direction": "中性等待",
+            "impact": "官方信息会改变市场对经济、流动性和监管环境的预期；需要结合数据是否超预期判断方向。",
+            "beneficiaries": ["政策受益方向"],
+            "risks": ["预期落空板块"],
+            "judgement": "短线等待政策细节和成交量确认。",
+        }
     if theme == "科技产业链":
         negative = any(word in text for word in ["falls", "dips", "pressure", "slow", "worry", "下滑", "承压", "担忧"])
         return {
@@ -673,12 +915,19 @@ def build_global_intelligence(now, commodities):
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
         feed_results = list(executor.map(lambda feed: fetch_rss_feed(*feed), NEWS_FEEDS))
     items = [item for group in feed_results for item in group]
+    official_updates_raw = build_official_updates(now)
+    items.extend(official_updates_raw)
     items.extend(fetch_eastmoney_news("A股 焦点复盘"))
 
     cutoff = now - timedelta(days=8)
     filtered = []
     for item in items:
-        if item["published"] < cutoff or not item["title"] or not item["url"]:
+        official_source = item["source"] in (
+            "中国人民银行", "国家统计局", "中国证监会", "上海证券交易所",
+            "深圳证券交易所", "美国能源信息署", "OPEC动态（东方财富）"
+        )
+        source_cutoff = now - timedelta(days=21) if official_source else cutoff
+        if item["published"] < source_cutoff or not item["title"] or not item["url"]:
             continue
         title_lower = item["title"].lower()
         if item["source"] == "MarketWatch" and any(
@@ -705,14 +954,18 @@ def build_global_intelligence(now, commodities):
         item["theme"] = classify_news(item)
         item["titleZh"] = translate_headline(item["title"])
         item.update(news_impact(item["theme"], item))
-        item["publishedAt"] = item.pop("published").strftime("%m-%d %H:%M")
+        published_value = item.pop("published")
+        item["publishedAt"] = item.get("publishedAt") or (
+            published_value.strftime("%m-%d") if official_source else published_value.strftime("%m-%d %H:%M")
+        )
         title_only = item["title"].lower()
         item["region"] = (
             "中东" if any(word in title_only for word in ["gaza", "rafah", "lebanon", "iran"])
             else "非洲" if any(word in title_only for word in ["sudan", "sahara"])
             else "美国" if item["source"] == "美联储" or "congress" in item["title"].lower()
             else "欧洲" if item["source"] == "欧洲央行"
-            else "中国" if item["source"] == "东方财富" and any(word in item["title"] for word in ["A股", "人民币", "中国"])
+            else "中国" if item["source"] in ("中国人民银行", "国家统计局", "中国证监会", "上海证券交易所", "深圳证券交易所")
+            or (item["source"] == "东方财富" and any(word in item["title"] for word in ["A股", "人民币", "中国"]))
             else "全球"
         )
         filtered.append(item)
@@ -722,11 +975,11 @@ def build_global_intelligence(now, commodities):
     seen_titles = set()
     theme_limits = [
         ("地缘政治", 2),
-        ("货币政策", 2),
+        ("中国政策与市场", 2),
+        ("货币政策", 1),
         ("能源与通胀", 1),
         ("全球市场", 1),
         ("科技产业链", 1),
-        ("财报与公司", 1),
     ]
     for preferred_theme, limit in theme_limits:
         candidates = [item for item in filtered if item["theme"] == preferred_theme]
@@ -772,6 +1025,23 @@ def build_global_intelligence(now, commodities):
     ))
     risk_level = "低" if risk_score < 35 else "中等" if risk_score < 55 else "中高" if risk_score < 72 else "高"
     lead_themes = "、".join(dict.fromkeys(item["theme"] for item in selected[:4]))
+    official_output = []
+    for item in official_updates_raw:
+        if not item.get("publishedAt"):
+            continue
+        official_output.append(
+            {
+                "source": item["source"],
+                "title": item["title"],
+                "url": item["url"],
+                "publishedAt": item["publishedAt"],
+                "theme": item["theme"],
+                "direction": item["direction"],
+                "sourceType": item.get("sourceType", "官方"),
+                "impact": item.get("impact", ""),
+                "judgement": item.get("judgement", ""),
+            }
+        )
     return {
         "generatedAt": now.strftime("%Y-%m-%d %H:%M"),
         "riskScore": risk_score,
@@ -786,6 +1056,7 @@ def build_global_intelligence(now, commodities):
             )
         ),
         "events": selected,
+        "officialUpdates": official_output,
     }
 
 
@@ -840,6 +1111,52 @@ def next_trading_day():
     while current.weekday() >= 5:
         current += timedelta(days=1)
     return current
+
+
+def load_previous_snapshot():
+    try:
+        return json.loads((ROOT / "latest.json").read_text())
+    except Exception:
+        return None
+
+
+def commodities_from_snapshot(snapshot):
+    macro = {item["symbol"]: item for item in snapshot.get("macro", [])}
+
+    def commodity(symbol, fallback_value, fallback_note):
+        item = macro.get(symbol, {})
+        return {
+            "value": item.get("value", fallback_value),
+            "pct": item.get("pct", 0),
+            "timestamp": item.get("note", fallback_note),
+            "name": fallback_note,
+        }
+
+    return {
+        "hf_CL": commodity("102.CL00Y", 0, "上次有效油价"),
+        "hf_OIL": commodity("112.B00Y", 0, "上次有效油价"),
+        "hf_GC": commodity("101.GC00Y", 0, "上次有效金价"),
+        "hf_HG": {
+            **commodity("101.HG00Y", 0, "上次有效铜价"),
+            "value": commodity("101.HG00Y", 0, "上次有效铜价")["value"] * 100,
+        },
+    }
+
+
+def refresh_news_only(now):
+    snapshot = load_previous_snapshot()
+    if not snapshot:
+        raise RuntimeError("no previous valid snapshot available")
+    intelligence = build_global_intelligence(now, commodities_from_snapshot(snapshot))
+    if not intelligence.get("events"):
+        raise RuntimeError("no valid news events available")
+    snapshot["globalIntelligence"] = intelligence
+    snapshot["globalIntelUpdatedAt"] = now.strftime("%Y-%m-%d %H:%M")
+    snapshot["dataStatus"] = "market_snapshot_retained"
+    temporary_path = ROOT / "latest.json.tmp"
+    temporary_path.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n")
+    temporary_path.replace(ROOT / "latest.json")
+    print(json.dumps({"newsOnly": True, "globalEvents": len(intelligence["events"])}, ensure_ascii=False))
 
 
 def main():
@@ -997,4 +1314,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if "--news-only" in sys.argv:
+        refresh_news_only(datetime.now(BEIJING))
+    else:
+        main()
