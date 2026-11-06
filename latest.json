@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-06 21:01",
+  "generatedAt": "2026-11-06 21:03",
   "marketGroups": [
     {
       "title": "A股",
@@ -87,26 +87,26 @@
   "macro": [
     {
       "symbol": "102.CL00Y",
-      "value": 90.23,
-      "pct": -0.32,
+      "value": 90.34,
+      "pct": -0.2,
       "note": "美元/桶"
     },
     {
       "symbol": "112.B00Y",
-      "value": 97.82,
-      "pct": -0.48,
+      "value": 97.92,
+      "pct": -0.38,
       "note": "美元/桶"
     },
     {
       "symbol": "101.GC00Y",
-      "value": 4072.44,
-      "pct": -1.0,
+      "value": 4069.16,
+      "pct": -1.08,
       "note": "美元/盎司"
     },
     {
       "symbol": "101.HG00Y",
-      "value": 6.2671,
-      "pct": -0.05,
+      "value": 6.2796,
+      "pct": 0.15,
       "note": "美元/磅"
     }
   ],
@@ -2899,23 +2899,23 @@
     },
     {
       "region": "宏观",
-      "status": "最近可得 · 2026-11-06 21:01:05",
+      "status": "最近可得 · 2026-11-06 21:03:04",
       "title": "大宗价格压力缓和",
       "metrics": [
         [
           "WTI原油",
-          90.23,
-          -0.32
+          90.34,
+          -0.2
         ],
         [
           "COMEX铜",
-          6.2671,
-          -0.05
+          6.2796,
+          0.15
         ],
         [
           "COMEX黄金",
-          4072.44,
-          -1.0
+          4069.16,
+          -1.08
         ]
       ],
       "note": "原油上行会增加制造业成本；铜价偏强有利于资源板块；黄金回落通常对应避险需求降温。"
@@ -2923,29 +2923,29 @@
   ],
   "marketRead": {
     "title": "市场承压，优先等待支撑确认",
-    "text": "A股主要指数平均涨跌幅 -2.56%，自选股上涨家数 0/8。恒生科技相对恒生指数 -0.56 个百分点。WTI原油 -0.32%，COMEX铜 -0.05%，COMEX黄金 -1.00%。"
+    "text": "A股主要指数平均涨跌幅 -2.56%，自选股上涨家数 0/8。恒生科技相对恒生指数 -0.56 个百分点。WTI原油 -0.20%，COMEX铜 +0.15%，COMEX黄金 -1.08%。"
   },
   "dailyMainline": {
     "title": "市场承压，优先等待支撑确认",
-    "text": "A股主要指数平均涨跌幅 -2.56%，自选股上涨家数 0/8。恒生科技相对恒生指数 -0.56 个百分点。WTI原油 -0.32%，COMEX铜 -0.05%，COMEX黄金 -1.00%。"
+    "text": "A股主要指数平均涨跌幅 -2.56%，自选股上涨家数 0/8。恒生科技相对恒生指数 -0.56 个百分点。WTI原油 -0.20%，COMEX铜 +0.15%，COMEX黄金 -1.08%。"
   },
-  "macroRelease": "自动快照生成于 2026-11-06 21:01。宏观日历与公司公告未由本任务抓取，涉及最新事件请以官方发布为准。",
+  "macroRelease": "自动快照生成于 2026-11-06 21:03。宏观日历与公司公告未由本任务抓取，涉及最新事件请以官方发布为准。",
   "marketNews": [
     [
       "A股：上证 -1.10%，深证 -2.57%，创业板 -3.96%。",
-      "自动快照 · 2026-11-06 21:01"
+      "自动快照 · 2026-11-06 21:03"
     ],
     [
       "港股：恒生指数 -1.27%，恒生科技 -1.83%。",
-      "自动快照 · 2026-11-06 21:01"
+      "自动快照 · 2026-11-06 21:03"
     ],
     [
       "美股：道指 -3.44%，标普500 -4.36%，纳指 -5.52%。",
-      "自动快照 · 2026-11-06 21:01"
+      "自动快照 · 2026-11-06 21:03"
     ],
     [
-      "商品：WTI -0.32%，布伦特 -0.48%，COMEX铜 -0.05%。",
-      "行情源 · 2026-11-06 21:01:05"
+      "商品：WTI -0.20%，布伦特 -0.38%，COMEX铜 +0.15%。",
+      "行情源 · 2026-11-06 21:03:04"
     ],
     [
       "自动任务不替代交易所公告；涉及公司订单、监管和重大事项时，应以正式公告为准。",
@@ -3047,12 +3047,60 @@
     ]
   },
   "globalIntelligence": {
-    "generatedAt": "2026-11-06 21:01",
-    "riskScore": 31,
-    "riskLevel": "低",
-    "summary": "今日信息主要集中在中国政策与市场、货币政策、能源与通胀。地缘与能源事件主要通过油价、通胀和利率预期影响股市。",
-    "marketView": "WTI原油 -0.32%，COMEX黄金 -1.00%。能源和避险资产若继续同步走强，权益市场短线更可能承压；反之成长板块弹性更大。",
+    "generatedAt": "2026-11-06 21:03",
+    "riskScore": 56,
+    "riskLevel": "中高",
+    "summary": "今日信息主要集中在地缘政治、中国政策与市场。地缘与能源事件主要通过油价、通胀和利率预期影响股市。",
+    "marketView": "WTI原油 -0.20%，COMEX黄金 -1.08%。能源和避险资产若继续同步走强，权益市场短线更可能承压；反之成长板块弹性更大。",
     "events": [
+      {
+        "source": "联合国新闻",
+        "title": "Abyei: Deadly drone strikes mark ‘new and concerning’ threat, UN peacekeeping chief warns",
+        "summary": "Drone strikes that killed at least 30 people in Abyei last month have added “a new and concerning dimension” to security in the disputed area, the UN’s peacekeeping chief told the Security Council on Thursday.",
+        "url": "https://news.un.org/feed/view/en/story/2026/11/1168749",
+        "theme": "地缘政治",
+        "titleZh": null,
+        "direction": "偏利空风险资产",
+        "impact": "地缘冲突或安全真空会先抬高原油、黄金和航运的风险溢价；若持续升级，通胀预期可能上升，并压制高估值成长股。",
+        "beneficiaries": [
+          "原油",
+          "黄金",
+          "军工",
+          "油运"
+        ],
+        "risks": [
+          "航空",
+          "化工下游",
+          "高估值成长"
+        ],
+        "judgement": "短线偏防守；关注冲突是否扩大到能源运输通道。",
+        "publishedAt": "11-05 20:00",
+        "region": "全球"
+      },
+      {
+        "source": "联合国新闻",
+        "title": "UN peacekeeping chief warns of ‘security vacuum’ as Blue Helmets leave Lebanon and Western Sahara",
+        "summary": "The UN’s peacekeeping chief warned on Wednesday that the withdrawal of “Blue Helmets” from Lebanon and Western Sahara risks leaving a dangerous security vacuum, while the Security Council remains divided over what, if anything, should replace them.",
+        "url": "https://news.un.org/feed/view/en/story/2026/11/1168741",
+        "theme": "地缘政治",
+        "titleZh": "联合国警告维和力量撤离可能形成安全真空",
+        "direction": "偏利空风险资产",
+        "impact": "地缘冲突或安全真空会先抬高原油、黄金和航运的风险溢价；若持续升级，通胀预期可能上升，并压制高估值成长股。",
+        "beneficiaries": [
+          "原油",
+          "黄金",
+          "军工",
+          "油运"
+        ],
+        "risks": [
+          "航空",
+          "化工下游",
+          "高估值成长"
+        ],
+        "judgement": "短线偏防守；关注冲突是否扩大到能源运输通道。",
+        "publishedAt": "11-04 20:00",
+        "region": "中东"
+      },
       {
         "source": "中国人民银行",
         "title": "中国人民银行加力实施股票回购增持再贷款政策",
@@ -3186,27 +3234,6 @@
         ],
         "judgement": "关注业绩指引能否覆盖当前高估值。",
         "publishedAt": "11-06 20:03",
-        "region": "全球"
-      },
-      {
-        "source": "MarketWatch",
-        "title": "Moderna’s stock jumps after biotech raises sales outlook",
-        "summary": "The company lifted its revenue outlook for the year, saying it expects revenue to grow as much as 25% in 2026.",
-        "url": "https://www.marketwatch.com/story/modernas-stock-jumps-after-biotech-raises-sales-outlook-65363127?mod=mw_rss_topstories",
-        "theme": "财报与公司",
-        "titleZh": null,
-        "direction": "局部利多",
-        "impact": "财报会改变市场对行业订单和盈利增速的判断，影响通常先集中在公司及直接供应链，再扩散到同行业估值。",
-        "beneficiaries": [
-          "业绩超预期公司",
-          "上游设备"
-        ],
-        "risks": [
-          "指引下修公司",
-          "高库存产业链"
-        ],
-        "judgement": "不只看同比利润，还要看下一季度指引和现金流。",
-        "publishedAt": "11-06 20:48",
         "region": "全球"
       }
     ],
