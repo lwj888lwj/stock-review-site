@@ -30,7 +30,13 @@ jobs:
           python-version: "3.12"
 
       - name: Generate market snapshot
+        id: market_snapshot
+        continue-on-error: true
         run: python update_market_data.py
+
+      - name: Refresh official and geopolitical news with last valid market data
+        if: steps.market_snapshot.outcome != 'success'
+        run: python update_market_data.py --news-only
 
       - name: Commit updated analysis
         run: |
