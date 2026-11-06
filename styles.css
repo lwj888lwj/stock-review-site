@@ -103,6 +103,8 @@ button { font: inherit; }
   color: #147d69;
   background: var(--teal-soft);
   font-size: 13px;
+  white-space: nowrap;
+  flex: 0 0 auto;
 }
 .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 5px rgba(15, 169, 135, 0.11); }
 .header-actions { justify-self: end; display: flex; align-items: center; gap: 9px; }
@@ -657,6 +659,80 @@ dialog code { color: var(--blue); background: #edf4ff; padding: 2px 5px; border-
 .extension-points span { padding: 7px 10px; border-radius: 9px; background: #f3f8ff; color: #55708f; font-size: 11px; }
 .primary-button { width: 100%; padding: 12px; border: 0; border-radius: 12px; color: #fff; background: linear-gradient(120deg, var(--blue), #21a995); cursor: pointer; }
 
+/* Readability pass: keep dense market data, but never below a practical reading size. */
+.brand small { font-size: 11px; }
+.header-status, .install-app { font-size: 14px; }
+.eyebrow { font-size: 12px; }
+.workspace-subtitle { font-size: 17px; }
+.workspace-meta span { font-size: 14px; }
+.workspace-meta strong { font-size: 24px; }
+
+.command-head p:not(.eyebrow), .command-badge span { font-size: 14px; }
+.command-badge small, .command-index { font-size: 11px; }
+.summary-card-head span { font-size: 13px; }
+.summary-card-head small { font-size: 12px; }
+.market-summary-card h3 { font-size: 20px; }
+.summary-metrics span, .summary-metrics em { font-size: 12px; }
+.summary-metrics strong { font-size: 15px; }
+.market-summary-card > p { min-height: 0; font-size: 12.5px; }
+.market-read span, .command-subhead small { font-size: 12px; }
+.market-read p { font-size: 13px; }
+.command-subhead strong { font-size: 18px; }
+.sector-pulse-head span, .sector-pulse-head strong { font-size: 14px; }
+.sector-pulse-head small, .sector-state b, .sector-state span, .sector-pulse-card p { font-size: 12px; }
+.tomorrow-verdict > span, .tomorrow-levels span, .tomorrow-scenario-head { font-size: 11px; }
+.tomorrow-verdict p, .tomorrow-levels strong, .tomorrow-scenario p, .tomorrow-scenario small { font-size: 13px; }
+
+.intel-head p:not(.eyebrow) { font-size: 14px; }
+.intel-risk span, .intel-risk small { font-size: 11px; }
+.intel-summary span { font-size: 12px; }
+.intel-summary p { font-size: 15px; }
+.intel-summary small { font-size: 13px; }
+.intel-card { padding: 18px; }
+.intel-card-top span { font-size: 12px; }
+.intel-card-top b { font-size: 11px; }
+.intel-meta { font-size: 12px; }
+.intel-card h3 { font-size: 18px; line-height: 1.55; }
+.intel-original { font-size: 12px; }
+.intel-impact { min-height: 0; font-size: 14px; }
+.intel-assets span { font-size: 11.5px; }
+.intel-judgement span { font-size: 11px; }
+.intel-judgement strong { font-size: 13px; }
+.intel-card > a { font-size: 12px; }
+
+.official-updates { padding: 20px; }
+.official-updates-head h3 { font-size: 22px; }
+.official-updates-head > span { font-size: 12px; }
+.official-update-grid { gap: 10px; }
+.official-update-card { padding: 16px; }
+.official-update-meta { font-size: 13px; }
+.official-update-card > a { margin-top: 10px; font-size: 17px; line-height: 1.55; }
+.official-update-impact { margin-top: 9px; font-size: 14px; line-height: 1.7; }
+.official-update-card > small { margin-top: 8px; font-size: 13px; }
+.intel-glossary h3 { font-size: 21px; }
+.intel-term-grid strong { font-size: 14px; }
+.intel-term-grid p { font-size: 13px; }
+.intel-source-note { font-size: 12px; }
+
+.pool-title span, .stock-tab .tab-name { font-size: 15px; }
+.pool-title small, .stock-tab .tab-meta { font-size: 12px; }
+.global-report-head p:not(.eyebrow), .live-status { font-size: 14px; }
+.market-group-head strong { font-size: 16px; }
+.market-group-head span { font-size: 12px; }
+.market-row .name, .market-row .change { font-size: 13px; }
+.market-row .value { font-size: 16px; }
+.macro-item span, .data-note { font-size: 12px; }
+.macro-item small, .news-list time { font-size: 12px; }
+.news-list li, .daily-thesis p { font-size: 14px; }
+.daily-thesis-label { font-size: 12px; }
+.macro-release, .model-note { font-size: 13px; }
+.ohlc-grid span, .chart-axis, .signal span, .prob-ring span, .prob-copy span, .volatility-labels, .mini-scenario span, .mini-scenario em { font-size: 12px; }
+.chart-toolbar p, .legend, .forecast-description, .volatility-card p { font-size: 13px; }
+.scenario-card p, .scenario-trigger strong, .factor-list li, .risk-list li { font-size: 14px; }
+.ma-row, .ma-row strong, .fundamental-note, .glossary-item p, .text-button, .disclosure, footer { font-size: 13px; }
+.key-levels span, .key-levels small, .fundamental-item span, .fundamental-item small { font-size: 12px; }
+.glossary-item h3 { font-size: 16px; }
+
 @media (max-width: 1080px) {
   .site-header { grid-template-columns: 1fr auto; }
   .top-nav { display: none; }
@@ -684,8 +760,8 @@ dialog code { color: var(--blue); background: #edf4ff; padding: 2px 5px; border-
   .brand strong { font-size: 17px; }
   .brand small { display: none; }
   .header-actions { gap: 6px; }
-  .header-status { padding: 8px 9px; font-size: 10px; }
-  .install-app { padding: 8px 9px; font-size: 10px; }
+  .header-status { padding: 8px 9px; font-size: 12px; }
+  .install-app { padding: 8px 9px; font-size: 12px; }
   .workspace-head { padding: 42px 2px 25px; display: block; }
   .workspace-head h1 { font-size: 34px; }
   .workspace-meta { display: none; }
@@ -733,6 +809,14 @@ dialog code { color: var(--blue); background: #edf4ff; padding: 2px 5px; border-
   .glossary-grid { grid-template-columns: 1fr; }
   .thesis { font-size: 18px; }
   footer { display: grid; gap: 5px; }
+  .official-updates { padding: 14px; }
+  .official-updates-head h3 { font-size: 20px; }
+  .official-update-card { padding: 14px; }
+  .official-update-card > a { font-size: 16px; }
+  .official-update-impact { font-size: 14px; }
+  .official-update-meta, .official-update-card > small { font-size: 12px; }
+  .intel-card h3 { font-size: 17px; }
+  .intel-impact { font-size: 14px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
