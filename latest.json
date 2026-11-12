@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-12 17:21",
+  "generatedAt": "2026-11-13 06:56",
   "marketGroups": [
     {
       "title": "A股",
@@ -45,7 +45,7 @@
           "name": "恒生指数",
           "value": 24008.55,
           "pct": -1.26,
-          "time": "2026/11/12 17:06:05"
+          "time": "2026/11/12 18:31:05"
         },
         {
           "symbol": "hkHSTECH",
@@ -58,28 +58,28 @@
     },
     {
       "title": "美股",
-      "status": "收盘 · 11/11 美东",
+      "status": "收盘 · 11/12 美东",
       "rows": [
         {
           "symbol": "usDJI",
           "name": "道琼斯",
-          "value": 52486.49,
-          "pct": 0.49,
-          "time": "2026-11-11 16:43:58"
+          "value": 52297.09,
+          "pct": -0.36,
+          "time": "2026-11-12 16:58:18"
         },
         {
           "symbol": "usINX",
           "name": "标普500",
-          "value": 7619.38,
-          "pct": 1.31,
-          "time": "2026-11-11 16:42:03"
+          "value": 7592.4,
+          "pct": -0.35,
+          "time": "2026-11-12 16:58:23"
         },
         {
           "symbol": "usIXIC",
           "name": "纳斯达克",
-          "value": 25466.19,
-          "pct": 1.6,
-          "time": "2026-11-11 17:15:59"
+          "value": 25366.09,
+          "pct": -0.39,
+          "time": "2026-11-12 17:15:59"
         }
       ]
     }
@@ -87,26 +87,26 @@
   "macro": [
     {
       "symbol": "102.CL00Y",
-      "value": 86.52,
-      "pct": -0.02,
+      "value": 88.75,
+      "pct": 2.56,
       "note": "美元/桶"
     },
     {
       "symbol": "112.B00Y",
-      "value": 92.83,
-      "pct": 0.07,
+      "value": 95.98,
+      "pct": 3.47,
       "note": "美元/桶"
     },
     {
       "symbol": "101.GC00Y",
-      "value": 3936.53,
-      "pct": -1.6,
+      "value": 3878.95,
+      "pct": -3.04,
       "note": "美元/盎司"
     },
     {
       "symbol": "101.HG00Y",
-      "value": 6.22,
-      "pct": -1.11,
+      "value": 6.1873,
+      "pct": -1.63,
       "note": "美元/磅"
     }
   ],
@@ -141,7 +141,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA10",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 27.63 元，较昨收 -3.05%，收盘位于日内振幅的 10% 位置。当前 RSI(14) 约 32.4，MACD柱体为 +0.006；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 27.63 元，较昨收 -3.05%，收盘位于日内振幅的 10% 位置。当前 RSI(14) 约 32.4，MACD柱体为 +0.007；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -821,7 +821,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA20",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 35.30 元，较昨收 -1.78%，收盘位于日内振幅的 10% 位置。当前 RSI(14) 约 30.5，MACD柱体为 +0.425；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 35.30 元，较昨收 -1.78%，收盘位于日内振幅的 10% 位置。当前 RSI(14) 约 30.5，MACD柱体为 +0.427；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -1161,7 +1161,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "20日高点",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 50.82 元，较昨收 -1.65%，收盘位于日内振幅的 7% 位置。当前 RSI(14) 约 51.3，MACD柱体为 +1.312；已站上 MA20，趋势改善。",
+      "thesis": "今日收盘 50.82 元，较昨收 -1.65%，收盘位于日内振幅的 7% 位置。当前 RSI(14) 约 51.3，MACD柱体为 +1.307；已站上 MA20，趋势改善。",
       "signals": [
         [
           "收盘位置",
@@ -1501,7 +1501,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA10",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 26.78 元，较昨收 -3.88%，收盘位于日内振幅的 10% 位置。当前 RSI(14) 约 38.4，MACD柱体为 +0.088；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 26.78 元，较昨收 -3.88%，收盘位于日内振幅的 10% 位置。当前 RSI(14) 约 38.4，MACD柱体为 +0.089；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -1841,7 +1841,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA20",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 93.69 元，较昨收 +1.77%，收盘位于日内振幅的 7% 位置。当前 RSI(14) 约 37.0，MACD柱体为 +4.577；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 93.69 元，较昨收 +1.77%，收盘位于日内振幅的 7% 位置。当前 RSI(14) 约 37.0，MACD柱体为 +4.554；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -2181,7 +2181,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "20日高点",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 40.82 元，较昨收 -2.32%，收盘位于日内振幅的 1% 位置。当前 RSI(14) 约 46.7，MACD柱体为 +2.031；已站上 MA20，趋势改善。",
+      "thesis": "今日收盘 40.82 元，较昨收 -2.32%，收盘位于日内振幅的 1% 位置。当前 RSI(14) 约 46.7，MACD柱体为 +2.032；已站上 MA20，趋势改善。",
       "signals": [
         [
           "收盘位置",
@@ -2521,7 +2521,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA20",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 258.85 元，较昨收 -0.30%，收盘位于日内振幅的 7% 位置。当前 RSI(14) 约 40.6，MACD柱体为 +5.302；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 258.85 元，较昨收 -0.30%，收盘位于日内振幅的 7% 位置。当前 RSI(14) 约 40.6，MACD柱体为 +5.230；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -2876,46 +2876,46 @@
     },
     {
       "region": "美股",
-      "status": "收盘 · 11/11 美东",
-      "title": "分化加剧",
+      "status": "收盘 · 11/12 美东",
+      "title": "整体波动有限",
       "metrics": [
         [
           "道琼斯",
-          52486.49,
-          0.49
+          52297.09,
+          -0.36
         ],
         [
           "标普500",
-          7619.38,
-          1.31
+          7592.4,
+          -0.35
         ],
         [
           "纳斯达克",
-          25466.19,
-          1.6
+          25366.09,
+          -0.39
         ]
       ],
-      "note": "三大指数最大强弱差 1.11 个百分点，需继续观察科技权重和利率预期。"
+      "note": "三大指数最大强弱差 0.04 个百分点，需继续观察科技权重和利率预期。"
     },
     {
       "region": "宏观",
-      "status": "最近可得 · 2026-11-12 17:21:04",
-      "title": "大宗价格压力缓和",
+      "status": "最近可得 · 2026-11-13 05:59:59",
+      "title": "输入型成本仍有压力",
       "metrics": [
         [
           "WTI原油",
-          86.52,
-          -0.02
+          88.75,
+          2.56
         ],
         [
           "COMEX铜",
-          6.22,
-          -1.11
+          6.1873,
+          -1.63
         ],
         [
           "COMEX黄金",
-          3936.53,
-          -1.6
+          3878.95,
+          -3.04
         ]
       ],
       "note": "原油上行会增加制造业成本；铜价偏强有利于资源板块；黄金回落通常对应避险需求降温。"
@@ -2923,29 +2923,29 @@
   ],
   "marketRead": {
     "title": "市场承压，优先等待支撑确认",
-    "text": "A股主要指数平均涨跌幅 -1.01%，自选股上涨家数 1/8。恒生科技相对恒生指数 -1.10 个百分点。WTI原油 -0.02%，COMEX铜 -1.11%，COMEX黄金 -1.60%。"
+    "text": "A股主要指数平均涨跌幅 -1.01%，自选股上涨家数 1/8。恒生科技相对恒生指数 -1.10 个百分点。WTI原油 +2.56%，COMEX铜 -1.63%，COMEX黄金 -3.04%。"
   },
   "dailyMainline": {
     "title": "市场承压，优先等待支撑确认",
-    "text": "A股主要指数平均涨跌幅 -1.01%，自选股上涨家数 1/8。恒生科技相对恒生指数 -1.10 个百分点。WTI原油 -0.02%，COMEX铜 -1.11%，COMEX黄金 -1.60%。"
+    "text": "A股主要指数平均涨跌幅 -1.01%，自选股上涨家数 1/8。恒生科技相对恒生指数 -1.10 个百分点。WTI原油 +2.56%，COMEX铜 -1.63%，COMEX黄金 -3.04%。"
   },
-  "macroRelease": "自动快照生成于 2026-11-12 17:21。宏观日历与公司公告未由本任务抓取，涉及最新事件请以官方发布为准。",
+  "macroRelease": "自动快照生成于 2026-11-13 06:56。宏观日历与公司公告未由本任务抓取，涉及最新事件请以官方发布为准。",
   "marketNews": [
     [
       "A股：上证 -0.67%，深证 -1.68%，创业板 -2.44%。",
-      "自动快照 · 2026-11-12 17:21"
+      "自动快照 · 2026-11-13 06:56"
     ],
     [
       "港股：恒生指数 -1.26%，恒生科技 -2.36%。",
-      "自动快照 · 2026-11-12 17:21"
+      "自动快照 · 2026-11-13 06:56"
     ],
     [
-      "美股：道指 +0.49%，标普500 +1.31%，纳指 +1.60%。",
-      "自动快照 · 2026-11-12 17:21"
+      "美股：道指 -0.36%，标普500 -0.35%，纳指 -0.39%。",
+      "自动快照 · 2026-11-13 06:56"
     ],
     [
-      "商品：WTI -0.02%，布伦特 +0.07%，COMEX铜 -1.11%。",
-      "行情源 · 2026-11-12 17:21:04"
+      "商品：WTI +2.56%，布伦特 +3.47%，COMEX铜 -1.63%。",
+      "行情源 · 2026-11-13 05:59:59"
     ],
     [
       "自动任务不替代交易所公告；涉及公司订单、监管和重大事项时，应以正式公告为准。",
@@ -3011,7 +3011,7 @@
     }
   ],
   "tomorrowAnalysis": {
-    "dateLabel": "11月13日 周五",
+    "dateLabel": "11月16日 周一",
     "bias": "低开修复",
     "probability": 45,
     "summary": "指数承压后需要先确认低位承接，若支撑有效才具备修复条件。",
@@ -3047,17 +3047,17 @@
     ]
   },
   "globalIntelligence": {
-    "generatedAt": "2026-11-12 17:21",
-    "riskScore": 56,
+    "generatedAt": "2026-11-13 06:56",
+    "riskScore": 61,
     "riskLevel": "中高",
     "summary": "今日信息主要集中在地缘政治、中国政策与市场。地缘与能源事件主要通过油价、通胀和利率预期影响股市。",
-    "marketView": "WTI原油 -0.02%，COMEX黄金 -1.60%。能源和避险资产若继续同步走强，权益市场短线更可能承压；反之成长板块弹性更大。",
+    "marketView": "WTI原油 +2.56%，COMEX黄金 -3.04%。能源和避险资产若继续同步走强，权益市场短线更可能承压；反之成长板块弹性更大。",
     "events": [
       {
         "source": "联合国新闻",
-        "title": "Gaza winter aid: ‘No more delay’, Fletcher tells governments stalling on support",
-        "summary": "The UN’s Emergency Relief Coordinator, Tom Fletcher, expressed deep concern about the deteriorating humanitarian situation in Gaza, as UN member states and partners have been repeatedly delaying sending their support to the Strip.",
-        "url": "https://news.un.org/feed/view/en/story/2026/11/1168788",
+        "title": "Aid is the ‘only hope’ for millions in Sudan, WFP chief warns, as funding cuts deepen hunger crisis",
+        "summary": "The World Food Programme’s (WFP) new Executive Director has warned that funding cuts are worsening Sudan’s hunger crisis following his first field mission to the country, where he met families displaced by conflict and struggling to feed their children.",
+        "url": "https://news.un.org/feed/view/en/story/2026/11/1168793",
         "theme": "地缘政治",
         "titleZh": null,
         "direction": "偏利空风险资产",
@@ -3074,14 +3074,14 @@
           "高估值成长"
         ],
         "judgement": "短线偏防守；关注冲突是否扩大到能源运输通道。",
-        "publishedAt": "11-11 20:00",
-        "region": "中东"
+        "publishedAt": "11-12 20:00",
+        "region": "非洲"
       },
       {
         "source": "联合国新闻",
-        "title": "Lebanon: After 48 years patrolling the Blue Line, UN peacekeepers prepare exit",
-        "summary": "The situation in southern Lebanon remains volatile and extremely difficult for communities trying to rebuild their lives, UN peacekeepers based there report, despite a significant decrease in hostilities following an agreement in June between the United States, Lebanon and Israel.",
-        "url": "https://news.un.org/feed/view/en/story/2026/11/1168784",
+        "title": "Gaza winter aid: ‘No more delay’, Fletcher tells governments stalling on support",
+        "summary": "The UN’s Emergency Relief Coordinator, Tom Fletcher, expressed deep concern about the deteriorating humanitarian situation in Gaza, as UN member states and partners have been repeatedly delaying sending their support to the Strip.",
+        "url": "https://news.un.org/feed/view/en/story/2026/11/1168788",
         "theme": "地缘政治",
         "titleZh": null,
         "direction": "偏利空风险资产",
@@ -3190,9 +3190,9 @@
       },
       {
         "source": "MarketWatch",
-        "title": "Jensen Huang built Nvidia into a behemoth. His scandal puts the entire AI boom in jeopardy.",
-        "summary": "Huang fueled his company and the AI ecosystem with advanced chips and creative financing deals across the supply chain. What happens if he’s gone?",
-        "url": "https://www.marketwatch.com/story/jensen-huang-built-nvidia-into-a-behemoth-his-scandal-puts-the-entire-ai-boom-in-jeopardy-c374b079?mod=mw_rss_topstories",
+        "title": "Opening trading-card packs has become a $2 billion market",
+        "summary": "Pack-ripping apps are changing the way people buy and sell cards. But analysts say their “slot-like payoff” raises risks.",
+        "url": "https://www.marketwatch.com/story/opening-trading-card-packs-has-become-a-2-billion-market-new-apps-are-trying-to-cash-in-b7ba11f5?mod=mw_rss_topstories",
         "theme": "全球市场",
         "titleZh": null,
         "direction": "分化",
@@ -3208,7 +3208,7 @@
           "防御板块"
         ],
         "judgement": "短线偏强，但持续性取决于成交量和盈利预期。",
-        "publishedAt": "11-12 15:30",
+        "publishedAt": "11-13 06:38",
         "region": "全球"
       }
     ],
@@ -3281,9 +3281,9 @@
       },
       {
         "source": "美国能源信息署",
-        "title": "U.S. crude oil imports from Venezuela in July were highest since 2017",
-        "url": "https://www.eia.gov/todayinenergy/detail.php?id=68425",
-        "publishedAt": "11-06",
+        "title": "EIA forecasts Alaskan crude oil production to grow 13% in 2027",
+        "url": "https://www.eia.gov/todayinenergy/detail.php?id=68444",
+        "publishedAt": "11-12",
         "theme": "能源与通胀",
         "direction": "分化",
         "sourceType": "官方",
