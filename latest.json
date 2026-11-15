@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-13 17:19",
+  "generatedAt": "2026-11-16 06:50",
   "marketGroups": [
     {
       "title": "A股",
@@ -45,7 +45,7 @@
           "name": "恒生指数",
           "value": 23637.6,
           "pct": -1.55,
-          "time": "2026/11/13 17:03:15"
+          "time": "2026/11/13 18:31:15"
         },
         {
           "symbol": "hkHSTECH",
@@ -58,28 +58,28 @@
     },
     {
       "title": "美股",
-      "status": "收盘 · 11/12 美东",
+      "status": "收盘 · 11/13 美东",
       "rows": [
         {
           "symbol": "usDJI",
           "name": "道琼斯",
-          "value": 52297.09,
-          "pct": -0.36,
-          "time": "2026-11-12 16:58:18"
+          "value": 52347.55,
+          "pct": 0.1,
+          "time": "2026-11-13 16:43:26"
         },
         {
           "symbol": "usINX",
           "name": "标普500",
-          "value": 7592.4,
-          "pct": -0.35,
-          "time": "2026-11-12 16:58:23"
+          "value": 7561.67,
+          "pct": -0.4,
+          "time": "2026-11-13 16:43:19"
         },
         {
           "symbol": "usIXIC",
           "name": "纳斯达克",
-          "value": 25366.09,
-          "pct": -0.39,
-          "time": "2026-11-12 17:15:59"
+          "value": 25136.27,
+          "pct": -0.91,
+          "time": "2026-11-13 17:15:59"
         }
       ]
     }
@@ -87,26 +87,26 @@
   "macro": [
     {
       "symbol": "102.CL00Y",
-      "value": 88.75,
-      "pct": 0.02,
+      "value": 88.98,
+      "pct": 0.28,
       "note": "美元/桶"
     },
     {
       "symbol": "112.B00Y",
-      "value": 96.08,
-      "pct": 0.27,
+      "value": 96.29,
+      "pct": 0.49,
       "note": "美元/桶"
     },
     {
       "symbol": "101.GC00Y",
-      "value": 3900.94,
-      "pct": 0.4,
+      "value": 3886.21,
+      "pct": 0.02,
       "note": "美元/盎司"
     },
     {
       "symbol": "101.HG00Y",
-      "value": 6.1354,
-      "pct": -0.98,
+      "value": 6.1476,
+      "pct": -2.35,
       "note": "美元/磅"
     }
   ],
@@ -141,7 +141,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA10",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 26.44 元，较昨收 -4.31%，收盘位于日内振幅的 6% 位置。当前 RSI(14) 约 32.2，MACD柱体为 -0.117；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 26.44 元，较昨收 -4.31%，收盘位于日内振幅的 6% 位置。当前 RSI(14) 约 32.2，MACD柱体为 -0.115；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -1161,7 +1161,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "20日高点",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 50.02 元，较昨收 -1.57%，收盘位于日内振幅的 15% 位置。当前 RSI(14) 约 50.7，MACD柱体为 +1.049；已站上 MA20，趋势改善。",
+      "thesis": "今日收盘 50.02 元，较昨收 -1.57%，收盘位于日内振幅的 15% 位置。当前 RSI(14) 约 50.7，MACD柱体为 +1.052；已站上 MA20，趋势改善。",
       "signals": [
         [
           "收盘位置",
@@ -1501,7 +1501,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA10",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 26.38 元，较昨收 -1.49%，收盘位于日内振幅的 48% 位置。当前 RSI(14) 约 43.0，MACD柱体为 -0.066；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 26.38 元，较昨收 -1.49%，收盘位于日内振幅的 48% 位置。当前 RSI(14) 约 43.0，MACD柱体为 -0.064；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -1841,7 +1841,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA10",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 84.37 元，较昨收 -9.95%，收盘位于日内振幅的 0% 位置。当前 RSI(14) 约 36.8，MACD柱体为 +4.534；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 84.37 元，较昨收 -9.95%，收盘位于日内振幅的 0% 位置。当前 RSI(14) 约 36.8，MACD柱体为 +4.544；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -2181,7 +2181,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA10",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 38.46 元，较昨收 -5.78%，收盘位于日内振幅的 10% 位置。当前 RSI(14) 约 46.4，MACD柱体为 +1.756；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 38.46 元，较昨收 -5.78%，收盘位于日内振幅的 10% 位置。当前 RSI(14) 约 46.4，MACD柱体为 +1.749；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -2521,7 +2521,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA10",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 246.02 元，较昨收 -4.96%，收盘位于日内振幅的 7% 位置。当前 RSI(14) 约 41.2，MACD柱体为 +4.964；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 246.02 元，较昨收 -4.96%，收盘位于日内振幅的 7% 位置。当前 RSI(14) 约 41.2，MACD柱体为 +4.949；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -2876,46 +2876,46 @@
     },
     {
       "region": "美股",
-      "status": "收盘 · 11/12 美东",
-      "title": "整体波动有限",
+      "status": "收盘 · 11/13 美东",
+      "title": "分化加剧",
       "metrics": [
         [
           "道琼斯",
-          52297.09,
-          -0.36
+          52347.55,
+          0.1
         ],
         [
           "标普500",
-          7592.4,
-          -0.35
+          7561.67,
+          -0.4
         ],
         [
           "纳斯达克",
-          25366.09,
-          -0.39
+          25136.27,
+          -0.91
         ]
       ],
-      "note": "三大指数最大强弱差 0.04 个百分点，需继续观察科技权重和利率预期。"
+      "note": "三大指数最大强弱差 1.01 个百分点，需继续观察科技权重和利率预期。"
     },
     {
       "region": "宏观",
-      "status": "最近可得 · 2026-11-13 17:19:04",
+      "status": "最近可得 · 2026-11-14 05:59:59",
       "title": "输入型成本仍有压力",
       "metrics": [
         [
           "WTI原油",
-          88.75,
-          0.02
+          88.98,
+          0.28
         ],
         [
           "COMEX铜",
-          6.1354,
-          -0.98
+          6.1476,
+          -2.35
         ],
         [
           "COMEX黄金",
-          3900.94,
-          0.4
+          3886.21,
+          0.02
         ]
       ],
       "note": "原油上行会增加制造业成本；铜价偏强有利于资源板块；黄金回落通常对应避险需求降温。"
@@ -2923,29 +2923,29 @@
   ],
   "marketRead": {
     "title": "市场承压，优先等待支撑确认",
-    "text": "A股主要指数平均涨跌幅 -2.06%，自选股上涨家数 0/8。恒生科技相对恒生指数 -1.47 个百分点。WTI原油 +0.02%，COMEX铜 -0.98%，COMEX黄金 +0.40%。"
+    "text": "A股主要指数平均涨跌幅 -2.06%，自选股上涨家数 0/8。恒生科技相对恒生指数 -1.47 个百分点。WTI原油 +0.28%，COMEX铜 -2.35%，COMEX黄金 +0.02%。"
   },
   "dailyMainline": {
     "title": "市场承压，优先等待支撑确认",
-    "text": "A股主要指数平均涨跌幅 -2.06%，自选股上涨家数 0/8。恒生科技相对恒生指数 -1.47 个百分点。WTI原油 +0.02%，COMEX铜 -0.98%，COMEX黄金 +0.40%。"
+    "text": "A股主要指数平均涨跌幅 -2.06%，自选股上涨家数 0/8。恒生科技相对恒生指数 -1.47 个百分点。WTI原油 +0.28%，COMEX铜 -2.35%，COMEX黄金 +0.02%。"
   },
-  "macroRelease": "自动快照生成于 2026-11-13 17:19。宏观日历与公司公告未由本任务抓取，涉及最新事件请以官方发布为准。",
+  "macroRelease": "自动快照生成于 2026-11-16 06:50。宏观日历与公司公告未由本任务抓取，涉及最新事件请以官方发布为准。",
   "marketNews": [
     [
       "A股：上证 -0.59%，深证 -2.05%，创业板 -3.32%。",
-      "自动快照 · 2026-11-13 17:19"
+      "自动快照 · 2026-11-16 06:50"
     ],
     [
       "港股：恒生指数 -1.55%，恒生科技 -3.02%。",
-      "自动快照 · 2026-11-13 17:19"
+      "自动快照 · 2026-11-16 06:50"
     ],
     [
-      "美股：道指 -0.36%，标普500 -0.35%，纳指 -0.39%。",
-      "自动快照 · 2026-11-13 17:19"
+      "美股：道指 +0.10%，标普500 -0.40%，纳指 -0.91%。",
+      "自动快照 · 2026-11-16 06:50"
     ],
     [
-      "商品：WTI +0.02%，布伦特 +0.27%，COMEX铜 -0.98%。",
-      "行情源 · 2026-11-13 17:19:04"
+      "商品：WTI +0.28%，布伦特 +0.49%，COMEX铜 -2.35%。",
+      "行情源 · 2026-11-14 05:59:59"
     ],
     [
       "自动任务不替代交易所公告；涉及公司订单、监管和重大事项时，应以正式公告为准。",
@@ -3011,7 +3011,7 @@
     }
   ],
   "tomorrowAnalysis": {
-    "dateLabel": "11月16日 周一",
+    "dateLabel": "11月17日 周二",
     "bias": "低开修复",
     "probability": 45,
     "summary": "指数承压后需要先确认低位承接，若支撑有效才具备修复条件。",
@@ -3047,66 +3047,18 @@
     ]
   },
   "globalIntelligence": {
-    "generatedAt": "2026-11-13 17:19",
-    "riskScore": 56,
-    "riskLevel": "中高",
-    "summary": "今日信息主要集中在地缘政治、中国政策与市场。地缘与能源事件主要通过油价、通胀和利率预期影响股市。",
-    "marketView": "WTI原油 +0.02%，COMEX黄金 +0.40%。能源和避险资产若继续同步走强，权益市场短线更可能承压；反之成长板块弹性更大。",
+    "generatedAt": "2026-11-16 06:50",
+    "riskScore": 31,
+    "riskLevel": "低",
+    "summary": "今日信息主要集中在中国政策与市场、货币政策、能源与通胀。地缘与能源事件主要通过油价、通胀和利率预期影响股市。",
+    "marketView": "WTI原油 +0.28%，COMEX黄金 +0.02%。能源和避险资产若继续同步走强，权益市场短线更可能承压；反之成长板块弹性更大。",
     "events": [
       {
-        "source": "联合国新闻",
-        "title": "Six killed in Israeli airstrike on Gaza’s Nasser Hospital",
-        "summary": "An Israeli airstrike on Gaza’s Nasser Hospital on Wednesday night killed six people, injured 27 others and caused extensive damage.",
-        "url": "https://news.un.org/feed/view/en/story/2026/11/1168796",
-        "theme": "地缘政治",
-        "titleZh": null,
-        "direction": "偏利空风险资产",
-        "impact": "地缘冲突或安全真空会先抬高原油、黄金和航运的风险溢价；若持续升级，通胀预期可能上升，并压制高估值成长股。",
-        "beneficiaries": [
-          "原油",
-          "黄金",
-          "军工",
-          "油运"
-        ],
-        "risks": [
-          "航空",
-          "化工下游",
-          "高估值成长"
-        ],
-        "judgement": "短线偏防守；关注冲突是否扩大到能源运输通道。",
-        "publishedAt": "11-12 20:00",
-        "region": "中东"
-      },
-      {
-        "source": "联合国新闻",
-        "title": "Aid is the ‘only hope’ for millions in Sudan, WFP chief warns, as funding cuts deepen hunger crisis",
-        "summary": "The World Food Programme’s (WFP) new Executive Director has warned that funding cuts are worsening Sudan’s hunger crisis following his first field mission to the country, where he met families displaced by conflict and struggling to feed their children.",
-        "url": "https://news.un.org/feed/view/en/story/2026/11/1168793",
-        "theme": "地缘政治",
-        "titleZh": null,
-        "direction": "偏利空风险资产",
-        "impact": "地缘冲突或安全真空会先抬高原油、黄金和航运的风险溢价；若持续升级，通胀预期可能上升，并压制高估值成长股。",
-        "beneficiaries": [
-          "原油",
-          "黄金",
-          "军工",
-          "油运"
-        ],
-        "risks": [
-          "航空",
-          "化工下游",
-          "高估值成长"
-        ],
-        "judgement": "短线偏防守；关注冲突是否扩大到能源运输通道。",
-        "publishedAt": "11-12 20:00",
-        "region": "非洲"
-      },
-      {
-        "source": "上海证券交易所",
-        "title": "交互融通 互利共赢——2026年上海证券交易所国际投资者大会开幕",
-        "url": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20261112_10837536.shtml",
+        "source": "国家统计局",
+        "title": "2026年11月上旬流通领域重要生产资料市场价格变动情况",
+        "url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261113_1965820.html",
         "summary": "",
-        "publishedAt": "11-12",
+        "publishedAt": "11-14",
         "theme": "中国政策与市场",
         "sourceType": "官方",
         "direction": "中性等待",
@@ -3190,9 +3142,9 @@
       },
       {
         "source": "MarketWatch",
-        "title": "My wife has dementia and may outlive me. How do we prepare for long-term memory care?",
-        "summary": "“She’s 69 and otherwise healthy as a horse.”",
-        "url": "https://www.marketwatch.com/story/my-wife-has-dementia-and-may-outlive-me-how-do-we-prepare-for-long-term-memory-care-9c23efaa?mod=mw_rss_topstories",
+        "title": "My older brother, who has no children, cut our only sister out of his will. I’ll get everything. Do I tell her?",
+        "summary": "“I’m torn between respecting my brother’s wishes and being fair to my sister.”",
+        "url": "https://www.marketwatch.com/story/she-has-a-history-of-financial-mismanagement-my-brother-cut-my-sister-out-of-his-will-im-getting-everything-do-i-tell-her-3e537851?mod=mw_rss_topstories",
         "theme": "全球市场",
         "titleZh": null,
         "direction": "分化",
@@ -3208,7 +3160,51 @@
           "防御板块"
         ],
         "judgement": "短线偏强，但持续性取决于成交量和盈利预期。",
-        "publishedAt": "11-13 17:09",
+        "publishedAt": "11-16 06:15",
+        "region": "全球"
+      },
+      {
+        "source": "MarketWatch",
+        "title": "Nvidia is gearing up for one of Wall Street’s most anticipated earnings calls in years",
+        "summary": "Jensen Huang’s sudden departure has made Tuesday’s earnings call “the most important in the company’s history.”",
+        "url": "https://www.marketwatch.com/story/nvidia-is-gearing-up-for-one-of-wall-streets-most-anticipated-earnings-calls-in-years-91855b1e?mod=mw_rss_topstories",
+        "theme": "财报与公司",
+        "titleZh": null,
+        "direction": "局部利多",
+        "impact": "财报会改变市场对行业订单和盈利增速的判断，影响通常先集中在公司及直接供应链，再扩散到同行业估值。",
+        "beneficiaries": [
+          "业绩超预期公司",
+          "上游设备"
+        ],
+        "risks": [
+          "指引下修公司",
+          "高库存产业链"
+        ],
+        "judgement": "不只看同比利润，还要看下一季度指引和现金流。",
+        "publishedAt": "11-16 05:32",
+        "region": "全球"
+      },
+      {
+        "source": "MarketWatch",
+        "title": "Budget airlines are going upscale with first-class seats and faster wifi",
+        "summary": "Forget no-frills: Frontier and JetBlue are chasing luxury flyers, and Wall Street is buying in.",
+        "url": "https://www.marketwatch.com/story/budget-airlines-are-going-upscale-with-first-class-seats-and-faster-wifi-999868ab?mod=mw_rss_topstories",
+        "theme": "全球市场",
+        "titleZh": null,
+        "direction": "分化",
+        "impact": "风险偏好改善有利于股票和高收益债；但若上涨主要来自政策预期，仍需后续经济数据和企业盈利确认。",
+        "beneficiaries": [
+          "权益市场",
+          "周期股",
+          "高收益债"
+        ],
+        "risks": [
+          "黄金",
+          "美债",
+          "防御板块"
+        ],
+        "judgement": "短线偏强，但持续性取决于成交量和盈利预期。",
+        "publishedAt": "11-16 05:31",
         "region": "全球"
       }
     ],
@@ -3226,9 +3222,9 @@
       },
       {
         "source": "国家统计局",
-        "title": "2026年10月份居民消费价格同比上涨0.7%",
-        "url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261109_1965795.html",
-        "publishedAt": "11-09",
+        "title": "2026年11月上旬流通领域重要生产资料市场价格变动情况",
+        "url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261113_1965820.html",
+        "publishedAt": "11-14",
         "theme": "中国政策与市场",
         "direction": "中性等待",
         "sourceType": "官方",
@@ -3245,17 +3241,6 @@
         "sourceType": "官方",
         "impact": "流动性支持或稳市场政策会改善风险偏好，通常利好券商、金融、成长和高股息资产；仍需观察成交额和政策落地规模。",
         "judgement": "短线偏利多，重点看政策覆盖范围与市场成交是否放大。"
-      },
-      {
-        "source": "上海证券交易所",
-        "title": "交互融通 互利共赢——2026年上海证券交易所国际投资者大会开幕",
-        "url": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20261112_10837536.shtml",
-        "publishedAt": "11-12",
-        "theme": "中国政策与市场",
-        "direction": "中性等待",
-        "sourceType": "官方",
-        "impact": "官方信息会改变市场对经济、流动性和监管环境的预期；需要结合数据是否超预期判断方向。",
-        "judgement": "短线等待政策细节和成交量确认。"
       },
       {
         "source": "深圳证券交易所",
