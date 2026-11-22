@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-11-20 17:23",
+  "generatedAt": "2026-11-23 06:55",
   "marketGroups": [
     {
       "title": "A股",
@@ -45,7 +45,7 @@
           "name": "恒生指数",
           "value": 22410.8,
           "pct": -1.89,
-          "time": "2026/11/20 17:07:27"
+          "time": "2026/11/20 18:31:27"
         },
         {
           "symbol": "hkHSTECH",
@@ -58,28 +58,28 @@
     },
     {
       "title": "美股",
-      "status": "收盘 · 11/19 美东",
+      "status": "收盘 · 11/20 美东",
       "rows": [
         {
           "symbol": "usDJI",
           "name": "道琼斯",
-          "value": 49097.06,
-          "pct": -2.19,
-          "time": "2026-11-19 16:59:13"
+          "value": 48147.33,
+          "pct": -1.93,
+          "time": "2026-11-20 16:35:59"
         },
         {
           "symbol": "usINX",
           "name": "标普500",
-          "value": 7175.83,
-          "pct": -2.02,
-          "time": "2026-11-19 16:59:18"
+          "value": 6910.39,
+          "pct": -3.7,
+          "time": "2026-11-20 16:35:54"
         },
         {
           "symbol": "usIXIC",
           "name": "纳斯达克",
-          "value": 23879.2,
-          "pct": -2.25,
-          "time": "2026-11-19 17:15:59"
+          "value": 22617.73,
+          "pct": -5.28,
+          "time": "2026-11-20 17:15:59"
         }
       ]
     }
@@ -87,26 +87,26 @@
   "macro": [
     {
       "symbol": "102.CL00Y",
-      "value": 81.64,
-      "pct": -0.97,
+      "value": 83.66,
+      "pct": 1.48,
       "note": "美元/桶"
     },
     {
       "symbol": "112.B00Y",
-      "value": 91.03,
-      "pct": -1.04,
+      "value": 92.59,
+      "pct": 0.66,
       "note": "美元/桶"
     },
     {
       "symbol": "101.GC00Y",
-      "value": 3590.32,
-      "pct": -2.58,
+      "value": 3535.39,
+      "pct": -4.07,
       "note": "美元/盎司"
     },
     {
       "symbol": "101.HG00Y",
-      "value": 5.6548,
-      "pct": -1.18,
+      "value": 5.5486,
+      "pct": -3.04,
       "note": "美元/磅"
     }
   ],
@@ -141,7 +141,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA10",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 24.53 元，较昨收 -1.57%，收盘位于日内振幅的 74% 位置。当前 RSI(14) 约 28.2，MACD柱体为 -0.358；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 24.53 元，较昨收 -1.57%，收盘位于日内振幅的 74% 位置。当前 RSI(14) 约 28.2，MACD柱体为 -0.356；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -821,7 +821,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA10",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 28.91 元，较昨收 -7.99%，收盘位于日内振幅的 7% 位置。当前 RSI(14) 约 25.6，MACD柱体为 -0.435；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 28.91 元，较昨收 -7.99%，收盘位于日内振幅的 7% 位置。当前 RSI(14) 约 25.6，MACD柱体为 -0.437；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -1161,7 +1161,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA20",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 45.70 元，较昨收 -4.09%，收盘位于日内振幅的 10% 位置。当前 RSI(14) 约 51.5，MACD柱体为 -0.505；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 45.70 元，较昨收 -4.09%，收盘位于日内振幅的 10% 位置。当前 RSI(14) 约 51.5，MACD柱体为 -0.507；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -1841,7 +1841,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA10",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 67.60 元，较昨收 -5.72%，收盘位于日内振幅的 0% 位置。当前 RSI(14) 约 30.8，MACD柱体为 +1.782；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 67.60 元，较昨收 -5.72%，收盘位于日内振幅的 0% 位置。当前 RSI(14) 约 30.8，MACD柱体为 +1.765；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -2181,7 +2181,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA10",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 32.86 元，较昨收 -6.46%，收盘位于日内振幅的 0% 位置。当前 RSI(14) 约 40.7，MACD柱体为 +0.122；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 32.86 元，较昨收 -6.46%，收盘位于日内振幅的 0% 位置。当前 RSI(14) 约 40.7，MACD柱体为 +0.121；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -2521,7 +2521,7 @@
       "supportLabel": "近10日低点",
       "resistanceLabel": "MA10",
       "resistance2Label": "中期压力",
-      "thesis": "今日收盘 205.88 元，较昨收 -5.91%，收盘位于日内振幅的 2% 位置。当前 RSI(14) 约 30.7，MACD柱体为 -2.086；仍低于 MA20，趋势仍需确认。",
+      "thesis": "今日收盘 205.88 元，较昨收 -5.91%，收盘位于日内振幅的 2% 位置。当前 RSI(14) 约 30.7，MACD柱体为 -2.133；仍低于 MA20，趋势仍需确认。",
       "signals": [
         [
           "收盘位置",
@@ -2876,46 +2876,46 @@
     },
     {
       "region": "美股",
-      "status": "收盘 · 11/19 美东",
-      "title": "整体波动有限",
+      "status": "收盘 · 11/20 美东",
+      "title": "分化加剧",
       "metrics": [
         [
           "道琼斯",
-          49097.06,
-          -2.19
+          48147.33,
+          -1.93
         ],
         [
           "标普500",
-          7175.83,
-          -2.02
+          6910.39,
+          -3.7
         ],
         [
           "纳斯达克",
-          23879.2,
-          -2.25
+          22617.73,
+          -5.28
         ]
       ],
-      "note": "三大指数最大强弱差 0.23 个百分点，需继续观察科技权重和利率预期。"
+      "note": "三大指数最大强弱差 3.35 个百分点，需继续观察科技权重和利率预期。"
     },
     {
       "region": "宏观",
-      "status": "最近可得 · 2026-11-20 17:23:06",
-      "title": "大宗价格压力缓和",
+      "status": "最近可得 · 2026-11-21 05:59:59",
+      "title": "输入型成本仍有压力",
       "metrics": [
         [
           "WTI原油",
-          81.64,
-          -0.97
+          83.66,
+          1.48
         ],
         [
           "COMEX铜",
-          5.6548,
-          -1.18
+          5.5486,
+          -3.04
         ],
         [
           "COMEX黄金",
-          3590.32,
-          -2.58
+          3535.39,
+          -4.07
         ]
       ],
       "note": "原油上行会增加制造业成本；铜价偏强有利于资源板块；黄金回落通常对应避险需求降温。"
@@ -2923,29 +2923,29 @@
   ],
   "marketRead": {
     "title": "市场承压，优先等待支撑确认",
-    "text": "A股主要指数平均涨跌幅 -2.75%，自选股上涨家数 0/8。恒生科技相对恒生指数 -1.89 个百分点。WTI原油 -0.97%，COMEX铜 -1.18%，COMEX黄金 -2.58%。"
+    "text": "A股主要指数平均涨跌幅 -2.75%，自选股上涨家数 0/8。恒生科技相对恒生指数 -1.89 个百分点。WTI原油 +1.48%，COMEX铜 -3.04%，COMEX黄金 -4.07%。"
   },
   "dailyMainline": {
     "title": "市场承压，优先等待支撑确认",
-    "text": "A股主要指数平均涨跌幅 -2.75%，自选股上涨家数 0/8。恒生科技相对恒生指数 -1.89 个百分点。WTI原油 -0.97%，COMEX铜 -1.18%，COMEX黄金 -2.58%。"
+    "text": "A股主要指数平均涨跌幅 -2.75%，自选股上涨家数 0/8。恒生科技相对恒生指数 -1.89 个百分点。WTI原油 +1.48%，COMEX铜 -3.04%，COMEX黄金 -4.07%。"
   },
-  "macroRelease": "自动快照生成于 2026-11-20 17:23。宏观日历与公司公告未由本任务抓取，涉及最新事件请以官方发布为准。",
+  "macroRelease": "自动快照生成于 2026-11-23 06:55。宏观日历与公司公告未由本任务抓取，涉及最新事件请以官方发布为准。",
   "marketNews": [
     [
       "A股：上证 -1.23%，深证 -3.09%，创业板 -3.54%。",
-      "自动快照 · 2026-11-20 17:23"
+      "自动快照 · 2026-11-23 06:55"
     ],
     [
       "港股：恒生指数 -1.89%，恒生科技 -3.78%。",
-      "自动快照 · 2026-11-20 17:23"
+      "自动快照 · 2026-11-23 06:55"
     ],
     [
-      "美股：道指 -2.19%，标普500 -2.02%，纳指 -2.25%。",
-      "自动快照 · 2026-11-20 17:23"
+      "美股：道指 -1.93%，标普500 -3.70%，纳指 -5.28%。",
+      "自动快照 · 2026-11-23 06:55"
     ],
     [
-      "商品：WTI -0.97%，布伦特 -1.04%，COMEX铜 -1.18%。",
-      "行情源 · 2026-11-20 17:23:06"
+      "商品：WTI +1.48%，布伦特 +0.66%，COMEX铜 -3.04%。",
+      "行情源 · 2026-11-21 05:59:59"
     ],
     [
       "自动任务不替代交易所公告；涉及公司订单、监管和重大事项时，应以正式公告为准。",
@@ -3011,7 +3011,7 @@
     }
   ],
   "tomorrowAnalysis": {
-    "dateLabel": "11月23日 周一",
+    "dateLabel": "11月24日 周二",
     "bias": "低开修复",
     "probability": 45,
     "summary": "指数承压后需要先确认低位承接，若支撑有效才具备修复条件。",
@@ -3047,66 +3047,18 @@
     ]
   },
   "globalIntelligence": {
-    "generatedAt": "2026-11-20 17:23",
-    "riskScore": 56,
-    "riskLevel": "中高",
-    "summary": "今日信息主要集中在地缘政治、中国政策与市场。地缘与能源事件主要通过油价、通胀和利率预期影响股市。",
-    "marketView": "WTI原油 -0.97%，COMEX黄金 -2.58%。能源和避险资产若继续同步走强，权益市场短线更可能承压；反之成长板块弹性更大。",
+    "generatedAt": "2026-11-23 06:55",
+    "riskScore": 34,
+    "riskLevel": "低",
+    "summary": "今日信息主要集中在中国政策与市场、货币政策、能源与通胀。地缘与能源事件主要通过油价、通胀和利率预期影响股市。",
+    "marketView": "WTI原油 +1.48%，COMEX黄金 -4.07%。能源和避险资产若继续同步走强，权益市场短线更可能承压；反之成长板块弹性更大。",
     "events": [
       {
-        "source": "联合国新闻",
-        "title": "Winter rains deepen Gaza crisis amid restricted access and aid cuts",
-        "summary": "Gaza is facing a deepening shelter, sanitation and food security crisis as winter rains flood makeshift shelters, destroy scarce food supplies and leave displaced families struggling to stay warm and fed.",
-        "url": "https://news.un.org/feed/view/en/story/2026/11/1168821",
-        "theme": "地缘政治",
-        "titleZh": null,
-        "direction": "偏利空风险资产",
-        "impact": "地缘冲突或安全真空会先抬高原油、黄金和航运的风险溢价；若持续升级，通胀预期可能上升，并压制高估值成长股。",
-        "beneficiaries": [
-          "原油",
-          "黄金",
-          "军工",
-          "油运"
-        ],
-        "risks": [
-          "航空",
-          "化工下游",
-          "高估值成长"
-        ],
-        "judgement": "短线偏防守；关注冲突是否扩大到能源运输通道。",
-        "publishedAt": "11-17 20:00",
-        "region": "中东"
-      },
-      {
-        "source": "联合国新闻",
-        "title": "Lebanon leading the way in mental health support",
-        "summary": "Mental health support must be a core part of the humanitarian response, said the UN Deputy Secretary-General during a visit to Lebanon over the weekend, where efforts to address the psychological toll of years of conflict and instability offer valuable lessons for other crisis-affected countries.",
-        "url": "https://news.un.org/feed/view/en/story/2026/11/1168818",
-        "theme": "地缘政治",
-        "titleZh": null,
-        "direction": "偏利空风险资产",
-        "impact": "地缘冲突或安全真空会先抬高原油、黄金和航运的风险溢价；若持续升级，通胀预期可能上升，并压制高估值成长股。",
-        "beneficiaries": [
-          "原油",
-          "黄金",
-          "军工",
-          "油运"
-        ],
-        "risks": [
-          "航空",
-          "化工下游",
-          "高估值成长"
-        ],
-        "judgement": "短线偏防守；关注冲突是否扩大到能源运输通道。",
-        "publishedAt": "11-16 20:00",
-        "region": "中东"
-      },
-      {
         "source": "上海证券交易所",
-        "title": "上交所发布符合《可持续金融共同分类目录》标准的存量绿色债券清单",
-        "url": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20261120_10838317.shtml",
+        "title": "上交所组合式推出新一批降费措施 助力激发市场主体活力",
+        "url": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20261122_10838652.shtml",
         "summary": "",
-        "publishedAt": "11-20",
+        "publishedAt": "11-22",
         "theme": "中国政策与市场",
         "sourceType": "官方",
         "direction": "中性等待",
@@ -3122,11 +3074,11 @@
         "region": "中国"
       },
       {
-        "source": "国家统计局",
-        "title": "10月份国民经济运行总体平稳、向新向优",
-        "url": "https://www.stats.gov.cn/sj/zxfb/202611/t20261116_1965844.html",
+        "source": "深圳证券交易所",
+        "title": "深交所组合式推出新一批降费措施助力激发市场主体活力",
+        "url": "https://www.szse.cn/aboutus/trends/news/t20261122_623988.html",
         "summary": "",
-        "publishedAt": "11-16",
+        "publishedAt": "11-22",
         "theme": "中国政策与市场",
         "sourceType": "官方",
         "direction": "中性等待",
@@ -3142,10 +3094,10 @@
         "region": "中国"
       },
       {
-        "source": "欧洲央行",
-        "title": "Philip R. Lane: The practice and science of monetary policy communication: the ECB experience",
-        "summary": "",
-        "url": "https://www.ecb.europa.eu//press/key/date/2026/html/ecb.sp261117~7f5d3b1a0e.en.pdf",
+        "source": "美联储",
+        "title": "Federal Reserve Board releases results from survey of senior financial officers at banks about their strategies and practices for managing reserve balances",
+        "summary": "Federal Reserve Board releases results from survey of senior financial officers at banks about their strategies and practices for managing reserve balances",
+        "url": "https://www.federalreserve.gov/newsevents/pressreleases/other20261120a.htm",
         "theme": "货币政策",
         "titleZh": null,
         "direction": "待观察",
@@ -3161,13 +3113,13 @@
           "长久期债券"
         ],
         "judgement": "先看政策声明中的利率措辞、通胀判断和反对票数量。",
-        "publishedAt": "11-18 02:30",
-        "region": "欧洲"
+        "publishedAt": "11-20 23:00",
+        "region": "美国"
       },
       {
         "source": "MarketWatch",
-        "title": "‘Nvidia’s turmoil has me spooked’: Should I sell my stocks and buy real estate — or ride out the storm?",
-        "summary": "Tempted to ditch stocks for property or CDs? Take a deep breath before making any sudden moves.",
+        "title": "‘Nvidia’s turmoil has me spooked’: Is it time to sell my stocks and buy real estate?",
+        "summary": "If you are tempted to ditch stocks for property or CDs, take a deep breath before making any sudden moves.",
         "url": "https://www.marketwatch.com/story/nvidia-spooked-me-should-i-sell-my-stocks-or-ride-out-the-market-turmoil-560583c6?mod=mw_rss_topstories",
         "theme": "能源与通胀",
         "titleZh": null,
@@ -3184,14 +3136,14 @@
           "可选消费"
         ],
         "judgement": "油价方向是后续通胀和利率预期的关键变量。",
-        "publishedAt": "11-20 11:31",
+        "publishedAt": "11-23 01:00",
         "region": "全球"
       },
       {
         "source": "MarketWatch",
-        "title": "My wife is bankrolling her family’s trips to New York and it’s draining our savings. Should I ask her to stop?",
-        "summary": "“Hotel rooms can cost as much as $400 per night.”",
-        "url": "https://www.marketwatch.com/story/my-wife-pays-thousands-of-dollars-for-her-family-to-visit-from-argentina-how-can-i-convince-her-to-stop-9381351c?mod=mw_rss_topstories",
+        "title": "Corporate America hunts for ‘generational’ growth in AI, trading cards and the L.A. airport",
+        "summary": "There’s been no shortage of trends deemed once-in-a-generation by executives on earnings calls.",
+        "url": "https://www.marketwatch.com/story/corporate-america-hunts-for-generational-growth-in-ai-trading-cards-and-the-l-a-airport-3072eb1a?mod=mw_rss_topstories",
         "theme": "全球市场",
         "titleZh": null,
         "direction": "分化",
@@ -3207,7 +3159,53 @@
           "防御板块"
         ],
         "judgement": "短线偏强，但持续性取决于成交量和盈利预期。",
-        "publishedAt": "11-20 09:22",
+        "publishedAt": "11-23 05:51",
+        "region": "全球"
+      },
+      {
+        "source": "MarketWatch",
+        "title": "Ron Johnson’s Social Security gaffe buried important news",
+        "summary": "The Wisconsin Republican’s remarks overshadowed what might have been a useful Senate committee hearing about fixing Social Security.",
+        "url": "https://www.marketwatch.com/story/ron-johnsons-social-security-gaffe-buried-important-news-b96e0ce8?mod=mw_rss_topstories",
+        "theme": "全球市场",
+        "titleZh": null,
+        "direction": "分化",
+        "impact": "风险偏好改善有利于股票和高收益债；但若上涨主要来自政策预期，仍需后续经济数据和企业盈利确认。",
+        "beneficiaries": [
+          "权益市场",
+          "周期股",
+          "高收益债"
+        ],
+        "risks": [
+          "黄金",
+          "美债",
+          "防御板块"
+        ],
+        "judgement": "短线偏强，但持续性取决于成交量和盈利预期。",
+        "publishedAt": "11-23 05:28",
+        "region": "全球"
+      },
+      {
+        "source": "MarketWatch",
+        "title": "Social Security should be shut down, this Republican senator says",
+        "summary": "The program’s trust funds are forecast to run out of money in the next six years.",
+        "url": "https://www.marketwatch.com/story/social-security-should-be-shut-down-this-republican-senator-says-8f7fef81?mod=mw_rss_topstories",
+        "theme": "全球市场",
+        "titleZh": null,
+        "direction": "分化",
+        "impact": "风险偏好改善有利于股票和高收益债；但若上涨主要来自政策预期，仍需后续经济数据和企业盈利确认。",
+        "beneficiaries": [
+          "权益市场",
+          "周期股",
+          "高收益债"
+        ],
+        "risks": [
+          "黄金",
+          "美债",
+          "防御板块"
+        ],
+        "judgement": "短线偏强，但持续性取决于成交量和盈利预期。",
+        "publishedAt": "11-23 04:26",
         "region": "全球"
       }
     ],
@@ -3236,20 +3234,20 @@
       },
       {
         "source": "中国证监会",
-        "title": "吴清主席在首届中国资本市场学术年会开幕式上的致辞",
-        "url": "https://www.csrc.gov.cn/csrc/c106311/c7670983/content.shtml",
-        "publishedAt": "11-14",
+        "title": "证券监管部门联合公安机关依法处罚编造传播资本市场虚假信息行为 公布4起典型案例",
+        "url": "https://www.csrc.gov.cn/csrc/c100028/c7671953/content.shtml",
+        "publishedAt": "11-20",
         "theme": "中国政策与市场",
-        "direction": "中性等待",
+        "direction": "局部利空",
         "sourceType": "官方",
-        "impact": "官方信息会改变市场对经济、流动性和监管环境的预期；需要结合数据是否超预期判断方向。",
-        "judgement": "短线等待政策细节和成交量确认。"
+        "impact": "监管处罚和风险提示通常先影响涉事公司或行业，严重时可能压低相关板块的风险偏好。",
+        "judgement": "先核查是否涉及自选股及其供应链。"
       },
       {
         "source": "上海证券交易所",
-        "title": "上交所发布符合《可持续金融共同分类目录》标准的存量绿色债券清单",
-        "url": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20261120_10838317.shtml",
-        "publishedAt": "11-20",
+        "title": "上交所组合式推出新一批降费措施 助力激发市场主体活力",
+        "url": "https://www.sse.com.cn/aboutus/mediacenter/hotandd/c/c_20261122_10838652.shtml",
+        "publishedAt": "11-22",
         "theme": "中国政策与市场",
         "direction": "中性等待",
         "sourceType": "官方",
@@ -3258,25 +3256,14 @@
       },
       {
         "source": "深圳证券交易所",
-        "title": "平安西安高科产业园REIT在深交所上市",
-        "url": "https://www.szse.cn/aboutus/trends/news/t20261112_623874.html",
-        "publishedAt": "11-12",
+        "title": "深交所组合式推出新一批降费措施助力激发市场主体活力",
+        "url": "https://www.szse.cn/aboutus/trends/news/t20261122_623988.html",
+        "publishedAt": "11-22",
         "theme": "中国政策与市场",
         "direction": "中性等待",
         "sourceType": "官方",
         "impact": "官方信息会改变市场对经济、流动性和监管环境的预期；需要结合数据是否超预期判断方向。",
         "judgement": "短线等待政策细节和成交量确认。"
-      },
-      {
-        "source": "OPEC动态（东方财富）",
-        "title": "沙特10月原油产量恢复至战前水平 欧佩克+供应回升速度超预期",
-        "url": "http://finance.eastmoney.com/a/202611113928780431.html",
-        "publishedAt": "11-12",
-        "theme": "能源与通胀",
-        "direction": "分化",
-        "sourceType": "媒体聚合",
-        "impact": "能源价格上升会提高运输和制造企业成本，同时利好油气开采、煤炭和油运；若油价持续高企，央行降息空间会被压缩。",
-        "judgement": "油价方向是后续通胀和利率预期的关键变量。"
       },
       {
         "source": "美国能源信息署",
